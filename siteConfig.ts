@@ -31,7 +31,7 @@ export const siteConfig = {
   // ── 4. 默认封面 & 照片墙 ──
   defaultPostCover: "/blog-images/luna/luna_banner_1.webp",
   photoWallImage: "/blog-images/luna/luna_banner_5.webp",
-  cloudMusicIds: [],                        // 网易云歌单 ID，不要就清空
+  cloudMusicIds: ["27646197", "27646202", "3358718401", "2660148481", "417859220", "2082326624", "2082329066", "2082329069"],  // 网易云歌单 ID
 
   // ── 5. 社交链接（不要的就留空 ""）──
   social: {
@@ -39,8 +39,8 @@ export const siteConfig = {
     gitee: "",
     google: "",
     email: "",
-    qq: "",
-    wechat: "",
+    qq: "1052360232",
+    wechat: "zz0311259898",
   },
 
   // ── 6. 照片墙 ──
@@ -63,6 +63,7 @@ export const siteConfig = {
     "今天写代码了吗？",
     "BUG 修复进度 99%",
     "睡大觉中",
+    "我不想写策划案"
   ],
 
   // ── 10. 评论系统 Gitalk（需 GitHub OAuth App）──
