@@ -23,14 +23,20 @@ export const siteConfig = {
   useGradient: false,                       // true=渐变色, false=图片轮播
   themeColors: ["#a18cd1", "#fbc2eb", "#a1c4fd", "#c2e9fb"],  // 渐变用色
   bgImages: [
+    "/blog-images/微信图片_20260527051748_51_76.jpg",
+    "/blog-images/微信图片_20260527051749_52_76.jpg",
+    "/blog-images/微信图片_20260527051750_53_76.jpg",
+    "/blog-images/微信图片_20260527051751_54_76.jpg",
+    "/blog-images/luna/微信图片_20260527012156_50_76.jpg",
     "/blog-images/luna/luna_banner_1.webp",
     "/blog-images/luna/luna_banner_5.webp",
     "/blog-images/luna/luna_banner_7.webp",
   ],
 
   // ── 4. 默认封面 & 照片墙 ──
-  defaultPostCover: "/blog-images/luna/luna_banner_1.webp",
-  photoWallImage: "/blog-images/luna/luna_banner_5.webp",
+  defaultPostCover: "/blog-images/luna/luna_banner_5.webp",
+  photoWallImage: "/blog-images/微信图片_20260527051748_51_76.jpg",
+  chatterDefaultCover: "/blog-images/微信图片_20260527051750_53_76.jpg",
   cloudMusicIds: ["27646197", "27646202", "3358718401", "2660148481", "417859220", "2082326624", "2082329066", "2082329069"],  // 网易云歌单 ID
 
   // ── 5. 社交链接（不要的就留空 ""）──
