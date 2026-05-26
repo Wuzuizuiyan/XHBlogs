@@ -68,11 +68,11 @@ export const siteConfig = {
 
   // ── 10. 评论系统 Gitalk（需 GitHub OAuth App）──
   gitalkConfig: {
-    clientID: "",
-    clientSecret: "",
-    repo: "",
-    owner: "",
-    admin: [""],
+    clientID: "Ov23liv8GPwdIzQ0vnwJ",
+    clientSecret: "5c5290fc8c678b00e09f3d9c1496750ea5c9ce98",
+    repo: "XHBlogs",
+    owner: "Wuzuizuiyan",
+    admin: ["Wuzuizuiyan"],
   },
 
   // ── 11. 建站日期 ──
