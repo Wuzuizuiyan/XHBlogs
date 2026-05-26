@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "prebuild": "sed -i \"s|scope: 'public_repo'|scope: 'repo'|g\" node_modules/gitalk/dist/gitalk.js && sed -i \"s|baseURL: 'https://api.github.com'|baseURL: '/api/gh'|g\" node_modules/gitalk/dist/gitalk.js && echo 'gitalk patched'"
+    "lint": "eslint"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
