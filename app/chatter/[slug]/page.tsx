@@ -36,7 +36,9 @@ export async function generateStaticParams() {
 }
 
 async function getChatterData(slug: string) {
-  const fullPath = path.join(process.cwd(), 'chatters', `${slug}.md`);
+  // 解码 URL 编码的中文文件名
+  const decodedSlug = decodeURIComponent(slug);
+  const fullPath = path.join(process.cwd(), 'chatters', `${decodedSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   let { data, content } = matter(fileContents);
@@ -90,11 +92,16 @@ async function getChatterData(slug: string) {
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content);
 
+  // 确保 date 是字符串（gray-matter 会自动转 Date 对象）
+  const dateStr = data.date instanceof Date
+    ? data.date.toISOString().slice(0, 19).replace('T', ' ')
+    : (data.date || '未知时间');
+
   return {
     slug,
     contentHtml: processedContent.toString(),
     title: data.title || '碎片记录',
-    date: data.date,
+    date: dateStr,
     mood: data.mood,
     tags: data.tags && Array.isArray(data.tags) ? data.tags : [],
     cover: data.cover || siteConfig.defaultPostCover
@@ -111,7 +118,11 @@ function getRecentChatters(currentSlug: string) {
     const s = f.replace(/\.md$/, '');
     const c = fs.readFileSync(path.join(chattersDirectory, f), 'utf8');
     const { data } = matter(c);
-    return { slug: s, title: data.title || '碎片记录', date: data.date || '1970-01-01' };
+    // 确保 date 是字符串
+    const dateStr = data.date instanceof Date
+      ? data.date.toISOString().slice(0, 19).replace('T', ' ')
+      : (data.date || '1970-01-01');
+    return { slug: s, title: data.title || '碎片记录', date: dateStr };
   }).filter(p => p.slug !== currentSlug)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);

@@ -106,7 +106,7 @@ export const siteConfig = {
   },
 
   // ── 15. 友链申请格式 ──
-  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://你的域名\n头像：https://你的图床/avatar.jpg",
+  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：https://你的图床/avatar.jpg",
 
   // ── 16. 等级系统开关 ──
   enableLevelSystem: false,

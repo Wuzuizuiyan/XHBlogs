@@ -30,14 +30,19 @@ export default function ChatterPage() {
       const fileContents = fs.readFileSync(path.join(chattersDirectory, fileName), 'utf8');
       const { data, content } = matter(fileContents);
 
+      // 确保 date 是字符串（gray-matter 会自动转 Date 对象）
+      const dateStr = data.date instanceof Date
+        ? data.date.toISOString().slice(0, 19).replace('T', ' ')
+        : (data.date || '未知时间');
+
       return {
         slug,
         title: data.title || '',
-        date: data.date || '未知时间',
+        date: dateStr,
         tags: data.tags || [],
         mood: data.mood || '',
         cover: data.cover || '',
-        content: content.replace(/^#+ .*\n/m, '') // 去除开头的 markdown 标题以优化截取显示
+        content: content.replace(/^#+ .*\\n/m, '') // 去除开头的 markdown 标题以优化截取显示
       };
     }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime())); // 按时间倒序
   } catch (e) {
