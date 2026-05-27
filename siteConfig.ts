@@ -60,8 +60,8 @@ export const siteConfig = {
 
   // ── 8. 图床（Lsky Pro）──
   picBedName: "图床",
-  picBedUrl: "",
-  picBedToken: "",
+  picBedUrl: "http://img.wuzuizuiyan.cn:21579/api/v1",
+  picBedToken: "1|ci0EwGRVKEKnSCp5COkQxKLJt8pOFGpPQJXv0Brk",
 
   // ── 9. 背景弹幕 ──
   danmakuList: [
@@ -106,7 +106,7 @@ export const siteConfig = {
   },
 
   // ── 15. 友链申请格式 ──
-  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：https://你的图床/avatar.jpg",
+  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：http://img.wuzuizuiyan.cn:21579/你的图片链接",
 
   // ── 16. 等级系统开关 ──
   enableLevelSystem: false,
