@@ -40,7 +40,7 @@ export default function Timeline() {
           date: data.date || '1970-01-01',
           description: data.description || '',
           tags: postTags,
-          cover: data.cover || siteConfig.defaultPostCover,
+          cover: siteConfig.defaultPostCover,
         });
       });
 

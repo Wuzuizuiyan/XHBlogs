@@ -104,7 +104,7 @@ async function getChatterData(slug: string) {
     date: dateStr,
     mood: data.mood,
     tags: data.tags && Array.isArray(data.tags) ? data.tags : [],
-    cover: data.cover || siteConfig.defaultPostCover
+    cover: siteConfig.chatterDefaultCover
   };
 }
 
