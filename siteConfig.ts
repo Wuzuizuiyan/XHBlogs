@@ -16,27 +16,27 @@ export const siteConfig = {
 
   // ── 2. 头像 & 图标 ──
   // 图床外链 或 把图片放 public/ 下用相对路径如 "/avatar.jpg"
-  faviconUrl: "/blog-images/avatar.jpg",
-  avatarUrl: "/blog-images/avatar.jpg",
+  faviconUrl: "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a17330fa99dd.jpg",
+  avatarUrl: "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a17330fa99dd.jpg",
 
   // ── 3. 背景设置 ──
   useGradient: false,                       // true=渐变色, false=图片轮播
   themeColors: ["#a18cd1", "#fbc2eb", "#a1c4fd", "#c2e9fb"],  // 渐变用色
   bgImages: [
-    "/blog-images/微信图片_20260527051748_51_76.jpg",
-    "/blog-images/微信图片_20260527051749_52_76.jpg",
-    "/blog-images/微信图片_20260527051750_53_76.jpg",
-    "/blog-images/微信图片_20260527051751_54_76.jpg",
-    "/blog-images/luna/微信图片_20260527012156_50_76.jpg",
-    "/blog-images/luna/luna_banner_1.webp",
-    "/blog-images/luna/luna_banner_5.webp",
-    "/blog-images/luna/luna_banner_7.webp",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a173314e5719.jpg",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a17331581276.jpg",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733161cb75.jpg",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733167d54e.jpg",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a17330fa99dd.jpg",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733111aff2.webp",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733eecd515.webp",
+    "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733f0afa86.webp",
   ],
 
   // ── 4. 默认封面 & 照片墙 ──
-  defaultPostCover: "/blog-images/luna/luna_banner_5.webp",
-  photoWallImage: "/blog-images/luna/微信图片_20260527012156_50_76.jpg",
-  chatterDefaultCover: "/blog-images/微信图片_20260527051750_53_76.jpg",
+  defaultPostCover: "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733eecd515.webp",
+  photoWallImage: "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a17330fa99dd.jpg",
+  chatterDefaultCover: "http://img.wuzuizuiyan.cn:21579/i/2026/05/28/6a1733161cb75.jpg",
   cloudMusicIds: ["27646197", "27646202", "3358718401", "2660148481", "417859220", "2082326624", "2082329066", "2082329069"],  // 网易云歌单 ID
 
   // ── 5. 社交链接（不要的就留空 ""）──
