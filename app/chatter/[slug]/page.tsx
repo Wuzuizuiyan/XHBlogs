@@ -92,6 +92,11 @@ async function getChatterData(slug: string) {
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content);
 
+  // 将 markdown 中的相对图片路径转换为 /chatters/ 路径
+  let html = processedContent.toString();
+  html = html.replace(/ src="(?!http|\/|data:)([^"]+\.(png|jpg|jpeg|webp|gif|svg))"/g, ' src="/chatters/$1"');
+  html = html.replace(/ src='(?!http|\/|data:)([^']+\.(png|jpg|jpeg|webp|gif|svg))'/g, " src='/chatters/$1'");
+
   // 确保 date 是字符串（gray-matter 会自动转 Date 对象）
   const dateStr = data.date instanceof Date
     ? data.date.toISOString().slice(0, 19).replace('T', ' ')
@@ -99,7 +104,7 @@ async function getChatterData(slug: string) {
 
   return {
     slug,
-    contentHtml: processedContent.toString(),
+    contentHtml: html,
     title: data.title || '碎片记录',
     date: dateStr,
     mood: data.mood,
