@@ -95,3 +95,65 @@ input[type=range]::-webkit-slider-thumb {
   scrollbar-width: thin;
   scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
 }
+
+/* ========================================================
+   7. 文章内容样式优化
+   ======================================================== */
+
+/* 引用块样式 - 改为更简洁的样式 */
+.prose blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #64748b;
+  font-style: normal;
+  background: transparent;
+}
+
+/* 段落间距优化 - 减小段落间距 */
+.prose p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+/* 首行缩进 - 每段开头缩进两个汉字 */
+.prose p {
+  text-indent: 2em;
+}
+
+/* 标题不缩进 */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  text-indent: 0;
+}
+
+/* 列表不缩进 */
+.prose ul, .prose ol {
+  text-indent: 0;
+}
+
+/* 表格样式 */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.prose th, .prose td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.prose th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.dark .prose th {
+  background: #1e293b;
+}
+
+.dark .prose td, .dark .prose th {
+  border-color: #334155;
+}
