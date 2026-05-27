@@ -73,7 +73,23 @@ export default function Home() {
         const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
         const rawDate = data.date || '1970-01-01';
         const cover = siteConfig.chatterDefaultCover;
-        return { slug: fileName.replace(/\.md$/, ''), title: data.title || '碎片记录', description: data.description || content.substring(0, 60), cover: cover, date: rawDate, formattedDate: formatUpdateTime(rawDate) };
+        // 去除 markdown 格式符号
+        const stripMarkdown = (text: string) => {
+          return text
+            .replace(/#{1,6}\s/g, '')  // 标题
+            .replace(/\*\*(.*?)\*\*/g, '$1')  // 粗体
+            .replace(/\*(.*?)\*/g, '$1')  // 斜体
+            .replace(/`(.*?)`/g, '$1')  // 行内代码
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // 链接
+            .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')  // 图片
+            .replace(/^\s*[-*+]\s/gm, '')  // 列表
+            .replace(/^\s*>\s/gm, '')  // 引用
+            .replace(/\n{2,}/g, ' ')  // 多个换行变空格
+            .replace(/\n/g, ' ')  // 单个换行变空格
+            .trim();
+        };
+        const description = data.description || stripMarkdown(content).substring(0, 60);
+        return { slug: fileName.replace(/\.md$/, ''), title: data.title || '碎片记录', description: description, cover: cover, date: rawDate, formattedDate: formatUpdateTime(rawDate) };
       }).sort((a, b) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
