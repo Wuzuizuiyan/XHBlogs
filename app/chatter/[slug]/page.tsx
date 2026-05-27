@@ -97,6 +97,9 @@ async function getChatterData(slug: string) {
   html = html.replace(/ src="(?!http|\/|data:)([^"]+\.(png|jpg|jpeg|webp|gif|svg))"/g, ' src="/chatters/$1"');
   html = html.replace(/ src='(?!http|\/|data:)([^']+\.(png|jpg|jpeg|webp|gif|svg))'/g, " src='/chatters/$1'");
 
+  // 修复未被 remark 渲染的加粗 **text** -> <strong>text</strong>
+  html = html.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>');
+
   // 确保 date 是字符串（gray-matter 会自动转 Date 对象）
   const dateStr = data.date instanceof Date
     ? data.date.toISOString().slice(0, 19).replace('T', ' ')
