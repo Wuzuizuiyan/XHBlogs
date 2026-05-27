@@ -157,3 +157,16 @@ input[type=range]::-webkit-slider-thumb {
 .dark .prose td, .dark .prose th {
   border-color: #334155;
 }
+
+/* 脚注引用样式 - 隐藏 [^xxx^] 格式 */
+.prose sup a[href^="#fn"] {
+  font-size: 0.75em;
+  vertical-align: super;
+  color: #6366f1;
+  text-decoration: none;
+}
+
+/* 隐藏原始脚注标记 */
+.prose p > a[href^="#fnref"] {
+  display: none;
+}
