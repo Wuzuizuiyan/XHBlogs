@@ -10,6 +10,13 @@ export const friendsData: Friend[] = [
     "url": "https://www.xinghuisama.top",
     "description": "今天我也要学习吗",
     "avatar": "https://bu.dusays.com/2026/03/24/69c1e38ac1846.jpg",
-    "themeColor": "rgba(99,102,241,0.5)"
+    "themeColor": "rgba(99,102,241,0.5)",
+    "title": 1,
+    "date": "2026-05-28 01:15:59",
+    "tags": [
+      "说说",
+      "杂谈",
+      "博客"
+    ]
   }
 ];
