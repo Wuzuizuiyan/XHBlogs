@@ -5,7 +5,7 @@ export interface Friend { id: string; name: string; url: string; description: st
 
 export const friendsData: Friend[] = [
   {
-    "id": "friend-id",
+    "id": "xinghuisama",
     "name": "XingHuiSamaの宝藏之地",
     "url": "https://www.xinghuisama.top",
     "description": "今天我也要学习吗",
@@ -18,5 +18,13 @@ export const friendsData: Friend[] = [
       "杂谈",
       "博客"
     ]
+  },
+  {
+    "id": "leyili",
+    "name": "Leyili 花园",
+    "url": "https://930309.xyz/",
+    "description": "小小后花园~~~",
+    "avatar": "https://photo.930309.xyz/lcj.svg",
+    "themeColor": "rgba(99,102,241,0.5)"
   }
 ];
