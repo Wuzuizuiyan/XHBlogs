@@ -35,14 +35,32 @@ export default function ChatterPage() {
         ? data.date.toISOString().slice(0, 19).replace('T', ' ')
         : (data.date || '未知时间');
 
+      // 去除 markdown 格式符号用于预览
+      const stripMarkdown = (text: string) => {
+        return text
+          .replace(/#{1,6}\s/g, '')
+          .replace(/\*\*(.*?)\*\*/g, '$1')
+          .replace(/\*(.*?)\*/g, '$1')
+          .replace(/`(.*?)`/g, '$1')
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
+          .replace(/^\s*[-*+]\s/gm, '')
+          .replace(/^\s*>\s/gm, '')
+          .replace(/\[\^[^\]]+\]/g, '')  // 脚注引用
+          .replace(/\n{2,}/g, ' ')
+          .replace(/\n/g, ' ')
+          .trim();
+      };
+      const previewContent = stripMarkdown(content).substring(0, 200);
+
       return {
         slug,
         title: data.title || '',
         date: dateStr,
         tags: data.tags || [],
         mood: data.mood || '',
-        cover: data.cover || '',
-        content: content.replace(/^#+ .*\\n/m, '') // 去除开头的 markdown 标题以优化截取显示
+        cover: siteConfig.chatterDefaultCover,
+        content: previewContent || content.substring(0, 200)
       };
     }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime())); // 按时间倒序
   } catch (e) {

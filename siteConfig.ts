@@ -68,7 +68,7 @@ export const siteConfig = {
     "Hello World!",
     "编辑器打开进度 99%",
     "BUG 修复进度 99%",
-    "我开始冬眠了",
+    "我最近可能开始冬眠了",
     "我不想写策划案"
   ],
 
