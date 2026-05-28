@@ -11,13 +11,13 @@ export const siteConfig = {
   bio: "雾里醉语，且行且记",                  // 简介（显示在首页）
 
   navTitle: "雾醉醉言",                      // 导航栏名字
-  navSuffix: "",                            // 导航栏分隔符（不需要就留空，如 "の"）
-  navAfter: "",                             // 导航栏后缀（不需要就留空）
+  navSuffix: "·",                           // 导航栏分隔符（不需要就留空，如 "の"）
+  navAfter: "碎语",                         // 导航栏后缀（不需要就留空）
 
   // ── 2. 头像 & 图标 ──
   // 图床外链 或 把图片放 public/ 下用相对路径如 "/avatar.jpg"
-  faviconUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
-  avatarUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
+  faviconUrl: "/blog-images/avatar.jpg",
+  avatarUrl: "/blog-images/avatar.jpg",
 
   // ── 3. 背景设置 ──
   useGradient: false,                       // true=渐变色, false=图片轮播
@@ -60,15 +60,15 @@ export const siteConfig = {
 
   // ── 8. 图床（Lsky Pro）──
   picBedName: "图床",
-  picBedUrl: "http://img.wuzuizuiyan.cn:21579/api/v1",
-  picBedToken: "1|ci0EwGRVKEKnSCp5COkQxKLJt8pOFGpPQJXv0Brk",
+  picBedUrl: "",
+  picBedToken: "",
 
   // ── 9. 背景弹幕 ──
   danmakuList: [
     "Hello World!",
-    "今天写代码了吗？",
+    "编辑器打开进度 99%",
     "BUG 修复进度 99%",
-    "睡大觉中",
+    "我开始冬眠了",
     "我不想写策划案"
   ],
 
@@ -106,7 +106,7 @@ export const siteConfig = {
   },
 
   // ── 15. 友链申请格式 ──
-  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
+  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：https://你的图床/avatar.jpg",
 
   // ── 16. 等级系统开关 ──
   enableLevelSystem: false,
