@@ -21,7 +21,7 @@ export const siteConfig = {
 
   // ── 3. 背景设置 ──
   useGradient: false,                       // true=渐变色, false=图片轮播
-  themeColors: ["#f5e6c8", "#e8d5a3", "#d4a853", "#f0d78c"],  // 渐变用色
+  themeColors: ["#fce4d6", "#f8c9a8", "#e8945a", "#f0d78c"],  // 渐变用色
   bgImages: [
     "/blog-images/微信图片_20260527051748_51_76.jpg",
     "/blog-images/微信图片_20260527051749_52_76.jpg",
