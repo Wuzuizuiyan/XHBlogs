@@ -27,9 +27,6 @@ export default function ThemeToggleBlock() {
           </div>
        </div>
        <div className="text-center z-10 mt-auto">
-           <h3 className={`text-xl font-bold transition-colors duration-500 ${isDark ? 'text-white' : 'text-slate-800'}`}>
-             {isDark ? '流萤飞舞的深空' : '暖金晨曦'}
-           </h3>
            <p className={`text-sm font-medium mt-1 transition-colors duration-500 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
              {isDark ? <>观看星星的时候<br />人会变得比往日温柔</> : <>无论日落多少次<br />金色的时间依然会如期到来</>}
            </p>
