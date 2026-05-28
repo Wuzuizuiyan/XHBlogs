@@ -137,7 +137,7 @@ export default function PhotoWallClient() {
 
                 {activeQuery && matchedAlbums.length === 0 && matchedPhotos.length === 0 && (
                   <div className="text-center py-20 text-slate-500 font-medium">
-                    在泰拉大陆的任何角落都没找到相关的记忆...
+                    在任何角落都没找到相关的记忆...
                   </div>
                 )}
               </div>

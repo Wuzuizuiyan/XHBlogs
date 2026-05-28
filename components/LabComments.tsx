@@ -7,7 +7,7 @@ import Gitalk from 'gitalk';
 
 import { siteConfig } from '../siteConfig';
 
-// 🌟 专门为炼金实验室定制的 Gitalk 组件，不影响原有的 Comments.tsx
+// 🌟 专门为徽章实验室定制的 Gitalk 组件
 export default function LabComments({ pageId }: { pageId?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();

@@ -20,7 +20,7 @@ function seededRandom(seed: number) {
 }
 
 // ==========================================
-// 🌟 0. 炼金六边形徽章组件 (HexBadge) 满血特效版
+// 🌟 0. 六边形徽章组件 (HexBadge)
 // ==========================================
 const HexBadge = ({ badge, locked = false }: any) => {
   // 1~10阶 材质与动画特效
@@ -102,7 +102,7 @@ const MagicTooltip = ({ title, type, content, author, color }: any) => (
 );
 
 // ==========================================
-// 🌟 2. 交互式回声波纹节点 (原炼金药水瓶)
+// 🌟 2. 交互式回声波纹节点
 // ==========================================
 const LiquidFlask = ({ item, router }: { item: any; router: any }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -277,11 +277,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 2. 深度文章 & 杂谈随笔配置 (10~500篇满，10个阶段)
     const postChatterConfig = [
-      { num: 10, tier: 2, title: '初学乍练' }, { num: 50, tier: 3, title: '渐入佳境' },
-      { num: 100, tier: 4, title: '百篇达成' }, { num: 150, tier: 5, title: '笔耕不辍' },
-      { num: 200, tier: 6, title: '二百硕果' }, { num: 250, tier: 7, title: '文如泉涌' },
-      { num: 300, tier: 8, title: '三百大观' }, { num: 400, tier: 9, title: '著作等身' },
-      { num: 450, tier: 9, title: '言为心声' }, { num: 500, tier: 10, title: '真理之卷' }
+      { num: 10, tier: 2, title: '初笔' }, { num: 50, tier: 3, title: '半百' },
+      { num: 100, tier: 4, title: '百篇' }, { num: 150, tier: 5, title: '笔耕' },
+      { num: 200, tier: 6, title: '累累' }, { num: 250, tier: 7, title: '泉涌' },
+      { num: 300, tier: 8, title: '三百' }, { num: 400, tier: 9, title: '等身' },
+      { num: 450, tier: 9, title: '心声' }, { num: 500, tier: 10, title: '无倦' }
     ];
     postChatterConfig.forEach(conf => {
       const idPost = `post-${conf.num}`;
@@ -295,11 +295,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 3. 瞬间思绪配置 (10~800篇满，10个阶段)
     const momentConfig = [
-      { num: 10, tier: 2, title: '初次碎念' }, { num: 50, tier: 3, title: '活跃思维' },
-      { num: 100, tier: 4, title: '百念连结' }, { num: 200, tier: 5, title: '二百瞬息' },
-      { num: 300, tier: 6, title: '三百回眸' }, { num: 400, tier: 7, title: '四百心语' },
-      { num: 500, tier: 8, title: '五百流光' }, { num: 600, tier: 9, title: '六百繁星' },
-      { num: 700, tier: 9, title: '七百幻梦' }, { num: 800, tier: 10, title: '八百真理' }
+      { num: 10, tier: 2, title: '初语' }, { num: 50, tier: 3, title: '碎念' },
+      { num: 100, tier: 4, title: '百念' }, { num: 200, tier: 5, title: '纷至' },
+      { num: 300, tier: 6, title: '回眸' }, { num: 400, tier: 7, title: '心语' },
+      { num: 500, tier: 8, title: '流光' }, { num: 600, tier: 9, title: '繁星' },
+      { num: 700, tier: 9, title: '幻梦' }, { num: 800, tier: 10, title: '无尽' }
     ];
     momentConfig.forEach(conf => {
       const id = `moment-${conf.num}`;
@@ -309,9 +309,9 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 4. 照片墙配置 (10~100张满，3个阶段)
     const photoConfig = [
-      { num: 10, tier: 3, title: '光影初现' },
-      { num: 50, tier: 6, title: '时光捕手' },
-      { num: 100, tier: 10, title: '森罗万象' }
+      { num: 10, tier: 3, title: '初见' },
+      { num: 50, tier: 6, title: '捕光' },
+      { num: 100, tier: 10, title: '万象' }
     ];
     photoConfig.forEach(conf => {
       const id = `photo-${conf.num}`;
@@ -321,9 +321,9 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 5. 友链配置 (10~50个满，3个阶段)
     const friendConfig = [
-      { num: 10, tier: 3, title: '初结羁绊' },
-      { num: 20, tier: 6, title: '高朋满座' },
-      { num: 50, tier: 10, title: '知己遍天下' }
+      { num: 10, tier: 3, title: '初识' },
+      { num: 20, tier: 6, title: '满座' },
+      { num: 50, tier: 10, title: '知己' }
     ];
     friendConfig.forEach(conf => {
       const id = `friend-${conf.num}`;
@@ -506,8 +506,8 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
                   {rpgStats.todayPosts > 0 && <div className="flex justify-between text-[#e8e4d9]"><span>深度文章 <span className="text-[10px] text-[#8b6b4a]">x{rpgStats.todayPosts}</span></span><span className="text-[#10b981]">+{rpgStats.todayPosts * 50}</span></div>}
                   {rpgStats.todayChatters > 0 && <div className="flex justify-between text-[#e8e4d9]"><span>杂谈随笔 <span className="text-[10px] text-[#8b6b4a]">x{rpgStats.todayChatters}</span></span><span className="text-[#10b981]">+{rpgStats.todayChatters * 20}</span></div>}
                   {rpgStats.todayMoments > 0 && <div className="flex justify-between text-[#e8e4d9]"><span>瞬间思绪 <span className="text-[10px] text-[#8b6b4a]">x{rpgStats.todayMoments}</span></span><span className="text-[#10b981]">+{rpgStats.todayMoments * 10}</span></div>}
-                  {rpgStats.isCheckedInToday && <div className="flex justify-between text-[#e8e4d9]"><span>首发冥想</span><span className="text-[#10b981]">+100</span></div>}
-                  {rpgStats.todayExp === 0 && <div className="text-center text-slate-500 italic text-[10px] py-1">今日暂无研习记录</div>}
+                  {rpgStats.isCheckedInToday && <div className="flex justify-between text-[#e8e4d9]"><span>每日回声</span><span className="text-[#10b981]">+100</span></div>}
+                  {rpgStats.todayExp === 0 && <div className="text-center text-slate-500 italic text-[10px] py-1">今日暂无记录</div>}
                 </div>
               </div>
             </div>
@@ -527,7 +527,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
               {rpgStats.ownedBadges.length > 0 ? (
                 rpgStats.ownedBadges.map((badge, idx) => <HexBadge key={idx} badge={badge} />)
               ) : (
-                <p className="text-[#8b6b4a] text-xs italic w-full text-center py-4">徽章墙空空如也，快去研习魔法吧！</p>
+                <p className="text-[#8b6b4a] text-xs italic w-full text-center py-4">徽章墙空空如也，快去留下点什么吧！</p>
               )}
             </div>
           </div>
@@ -544,7 +544,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
                   className="relative w-full max-w-4xl max-h-[85vh] bg-[#1a110b] border-2 border-[#8b6b4a] rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col"
                 >
                   <div className="flex justify-between items-center px-6 py-4 border-b border-[#8b6b4a]/30 bg-[#231a16]">
-                    <h2 className="text-[#d4af37] font-black tracking-widest flex items-center gap-2 text-lg"><Grid size={20} /> 炼金徽章全图鉴</h2>
+                    <h2 className="text-[#d4af37] font-black tracking-widest flex items-center gap-2 text-lg"><Grid size={20} /> 残响全图鉴</h2>
                     <button onClick={() => setShowCatalog(false)} className="text-[#8b6b4a] hover:text-[#e8e4d9] transition-colors"><X size={24} /></button>
                   </div>
 
