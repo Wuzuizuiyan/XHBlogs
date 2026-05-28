@@ -141,9 +141,15 @@ const LiquidFlask = ({ item, router }: { item: any; router: any }) => {
       {/* 回声波纹动画：同心圆扩散 */}
       <div className="absolute inset-0 z-10 flex items-center justify-center">
         <svg className="absolute w-full h-full" viewBox="0 0 56 56">
-          <circle cx="28" cy="28" r={8 + fillHeight * 0.18} fill="none" stroke={color} strokeWidth="1.5" opacity="0.5" className="animate-[ripple_3s_ease-out_infinite]" />
-          <circle cx="28" cy="28" r={5 + fillHeight * 0.15} fill="none" stroke={color} strokeWidth="1.5" opacity="0.35" className="animate-[ripple_3s_ease-out_infinite_0.5s]" />
-          <circle cx="28" cy="28" r={3 + fillHeight * 0.1} fill={color} opacity="0.25" className="animate-[ripple_3s_ease-out_infinite_1s]" />
+          {/* 亮色波纹 */}
+          <circle cx="28" cy="28" r={8 + fillHeight * 0.18} fill="none" stroke={color} strokeWidth="2" opacity="0.7" className="animate-[ripple_3s_ease-out_infinite]" style={{ filter: `drop-shadow(0 0 4px ${color})` }} />
+          <circle cx="28" cy="28" r={5 + fillHeight * 0.15} fill="none" stroke={color} strokeWidth="2" opacity="0.5" className="animate-[ripple_3s_ease-out_infinite_0.5s]" style={{ filter: `drop-shadow(0 0 3px ${color})` }} />
+          <circle cx="28" cy="28" r={3 + fillHeight * 0.1} fill={color} opacity="0.4" className="animate-[ripple_3s_ease-out_infinite_1s]" style={{ filter: `drop-shadow(0 0 5px ${color})` }} />
+          {/* 漂浮粒子 */}
+          <circle cx="20" cy="18" r="1.2" fill={color} opacity="0.6" className="animate-[particle-float_2.5s_ease-in-out_infinite]" />
+          <circle cx="36" cy="22" r="0.8" fill={color} opacity="0.5" className="animate-[particle-float_3s_ease-in-out_infinite_0.3s]" />
+          <circle cx="24" cy="38" r="1" fill={color} opacity="0.45" className="animate-[particle-float_2s_ease-in-out_infinite_0.7s]" />
+          <circle cx="34" cy="34" r="0.9" fill={color} opacity="0.55" className="animate-[particle-float_2.8s_ease-in-out_infinite_1.2s]" />
         </svg>
       </div>
     </motion.div>
@@ -257,11 +263,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 1. 等级徽章配置 (1~50级满，10个阶段)
     const levelConfig = [
-      { num: 1, tier: 1, title: '见习术士' }, { num: 2, tier: 2, title: '初级刻印' },
-      { num: 3, tier: 3, title: '魔药调配员' }, { num: 5, tier: 4, title: '矩阵构筑师' },
-      { num: 10, tier: 5, title: '中级大师' }, { num: 15, tier: 6, title: '星曜魔导' },
-      { num: 20, tier: 7, title: '贤者之证' }, { num: 30, tier: 8, title: '深空领航' },
-      { num: 40, tier: 9, title: '深渊守望' }, { num: 50, tier: 10, title: '真理造物主' }
+      { num: 1, tier: 1, title: '旁观' }, { num: 2, tier: 2, title: '试探' },
+      { num: 3, tier: 3, title: '假面' }, { num: 5, tier: 4, title: '笨拙' },
+      { num: 10, tier: 5, title: '练习' }, { num: 15, tier: 6, title: '间奏' },
+      { num: 20, tier: 7, title: '选择' }, { num: 30, tier: 8, title: '真物' },
+      { num: 40, tier: 9, title: '余白' }, { num: 50, tier: 10, title: '共鸣' }
     ];
     levelConfig.forEach(conf => {
       const id = `lvl-${conf.num}`;
@@ -454,9 +460,9 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
               </div>
               <div className="flex flex-col">
                 <span className="text-[#e8e4d9] font-serif font-black text-xl tracking-widest flex items-center gap-2">
-                  炼金术士档案 <Sparkles size={18} className="text-[#d4af37]" />
+                  行笺 <Sparkles size={18} className="text-[#d4af37]" />
                 </span>
-                <span className="text-[#8b6b4a] text-xs font-mono tracking-widest mt-0.5">ALCHEMY RANK</span>
+                <span className="text-[#8b6b4a] text-xs font-mono tracking-widest mt-0.5">WAYFARER</span>
               </div>
             </div>
 
@@ -481,11 +487,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
             {/* 右侧：今日结算面板 (带悬浮明细) */}
             <div className="flex items-center gap-6 z-20 md:border-l border-[#8b6b4a]/30 md:pl-6 w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 mt-2 md:mt-0 relative group/tooltip cursor-help">
               <div className="flex flex-col items-center flex-1 md:flex-none">
-                <span className="text-[#8b6b4a] text-[10px] font-bold tracking-widest mb-1 border-b border-dashed border-[#8b6b4a]/50">今日研习</span>
+                <span className="text-[#8b6b4a] text-[10px] font-bold tracking-widest mb-1 border-b border-dashed border-[#8b6b4a]/50">今日落笔</span>
                 <span className="text-[#10b981] font-mono text-sm font-black">+{rpgStats.todayExp} EXP</span>
               </div>
               <div className="flex flex-col items-center flex-1 md:flex-none">
-                <span className="text-[#8b6b4a] text-[10px] font-bold tracking-widest mb-1.5">今日冥想 (打卡)</span>
+                <span className="text-[#8b6b4a] text-[10px] font-bold tracking-widest mb-1.5">今日回声 (打卡)</span>
                 {rpgStats.isCheckedInToday ? (
                   <span className="text-[#d4af37] text-[10px] font-black tracking-widest border border-[#d4af37]/50 px-2 py-0.5 rounded-md bg-[#d4af37]/10 shadow-[0_0_10px_rgba(212,175,55,0.2)]">已完成</span>
                 ) : (
