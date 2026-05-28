@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // 🌟 引入了新的图标 Camera, Users, Sprout
-import { MessageCircleHeart, ChevronLeft, ChevronRight, BookOpen, ScrollText, Coffee, FileText, Sparkles, Award, Shield, X, Grid, LockKeyhole, Camera, Users, Sprout } from 'lucide-react';
+import { MessageCircleHeart, ChevronLeft, ChevronRight, BookOpen, Sparkles, Shield, X, Grid, LockKeyhole, Camera, PenLine, MessageCircle, Wind, HeartHandshake } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 // 🌟 引入定制的无干扰留言板组件与站点配置
@@ -102,7 +102,7 @@ const MagicTooltip = ({ title, type, content, author, color }: any) => (
 );
 
 // ==========================================
-// 🌟 2. 交互式玻璃药水瓶
+// 🌟 2. 交互式回声波纹节点 (原炼金药水瓶)
 // ==========================================
 const LiquidFlask = ({ item, router }: { item: any; router: any }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -121,7 +121,7 @@ const LiquidFlask = ({ item, router }: { item: any; router: any }) => {
       onClick={handleFlaskClick}
       whileHover={{ y: -10, scale: 1.15 }}
       onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
-      className={`relative cursor-pointer flex justify-center mb-1 ${isHovered ? 'z-[100]' : 'z-10'}`}
+      className={`relative cursor-pointer flex justify-center items-center mb-1 ${isHovered ? 'z-[100]' : 'z-10'}`}
       style={{ width: '56px', height: '76px', marginLeft: `${item.marginLeft}px`, marginRight: `${item.marginRight}px`, filter: `drop-shadow(0 4px 6px ${color}44)` }}
     >
       <AnimatePresence>
@@ -138,20 +138,14 @@ const LiquidFlask = ({ item, router }: { item: any; router: any }) => {
         )}
       </AnimatePresence>
 
-      <motion.div animate={{ y: isHovered ? -14 : 0, x: isHovered ? 12 : 0, rotate: isHovered ? 45 : 0 }} transition={{ type: "spring", stiffness: 300, damping: 15 }} className="absolute -top-1.5 w-4 h-3 bg-[#5d4037] rounded-t-sm z-30 border-b border-[#3e2723] shadow-md origin-bottom-left" />
-
-      <div className="absolute inset-0 z-10 overflow-hidden backdrop-blur-[2px]" style={{ clipPath: 'polygon(38% 0%, 62% 0%, 62% 35%, 95% 90%, 85% 100%, 15% 100%, 5% 90%, 38% 35%)', background: 'rgba(255,255,255,0.05)', boxShadow: `inset 0 0 15px ${color}33` }}>
-         <div className="absolute bottom-0 left-0 w-full transition-all duration-1000" style={{ height: `${fillHeight}%` }}>
-            <svg className="absolute bottom-0 left-0 w-[200%] h-full pointer-events-none" viewBox="0 0 200 100" preserveAspectRatio="none">
-               <path fill={color} opacity="0.6" className="animate-[potion-wave_3s_linear_infinite]" d="M 0 15 Q 25 5 50 15 T 100 15 T 150 15 T 200 15 L 200 100 L 0 100 Z" />
-               <path fill={color} opacity="0.9" className="animate-[potion-wave_2s_linear_infinite_reverse]" d="M 0 20 Q 25 30 50 20 T 100 20 T 150 20 T 200 20 L 200 100 L 0 100 Z" />
-            </svg>
-            <div className="absolute bottom-2 left-[30%] w-1.5 h-1.5 bg-white/60 rounded-full animate-[bubble-rise_2s_infinite]" />
-            <div className="absolute bottom-1 left-[60%] w-1 h-1 bg-white/40 rounded-full animate-[bubble-rise_1.5s_infinite_0.5s]" />
-         </div>
-         <div className="absolute top-[15%] left-[25%] w-1.5 h-8 bg-white/40 rounded-full rotate-[15deg] blur-[0.5px]" />
+      {/* 回声波纹动画：同心圆扩散 */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
+        <svg className="absolute w-full h-full" viewBox="0 0 56 56">
+          <circle cx="28" cy="28" r={8 + fillHeight * 0.18} fill="none" stroke={color} strokeWidth="1.5" opacity="0.5" className="animate-[ripple_3s_ease-out_infinite]" />
+          <circle cx="28" cy="28" r={5 + fillHeight * 0.15} fill="none" stroke={color} strokeWidth="1.5" opacity="0.35" className="animate-[ripple_3s_ease-out_infinite_0.5s]" />
+          <circle cx="28" cy="28" r={3 + fillHeight * 0.1} fill={color} opacity="0.25" className="animate-[ripple_3s_ease-out_infinite_1s]" />
+        </svg>
       </div>
-      <div className="absolute inset-0 z-20 pointer-events-none" style={{ clipPath: 'polygon(38% 0%, 62% 0%, 62% 35%, 95% 90%, 85% 100%, 15% 100%, 5% 90%, 38% 35%)', border: '1.5px solid rgba(255,255,255,0.3)' }} />
     </motion.div>
   );
 };
@@ -271,7 +265,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
     ];
     levelConfig.forEach(conf => {
       const id = `lvl-${conf.num}`;
-      allCatalogBadges.push({ id, title: conf.title, typeLabel: `等级徽章 Lv.${conf.num}`, condition: `总资质等级达到 Lv.${conf.num}`, icon: Award, colorTier: conf.tier, group: 'level' });
+      allCatalogBadges.push({ id, title: conf.title, typeLabel: `等级徽章 Lv.${conf.num}`, condition: `总资质等级达到 Lv.${conf.num}`, icon: Sparkles, colorTier: conf.tier, group: 'level' });
       if (level >= conf.num) ownedIds.add(id);
     });
 
@@ -285,11 +279,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
     ];
     postChatterConfig.forEach(conf => {
       const idPost = `post-${conf.num}`;
-      allCatalogBadges.push({ id: idPost, title: conf.title, typeLabel: '深度文章成就', condition: `累计发布 ${conf.num} 篇文章`, icon: FileText, colorTier: conf.tier, group: 'post' });
+      allCatalogBadges.push({ id: idPost, title: conf.title, typeLabel: '深度文章成就', condition: `累计发布 ${conf.num} 篇文章`, icon: PenLine, colorTier: conf.tier, group: 'post' });
       if (posts.length >= conf.num) ownedIds.add(idPost);
 
       const idChatter = `chatter-${conf.num}`;
-      allCatalogBadges.push({ id: idChatter, title: conf.title, typeLabel: '杂谈随笔成就', condition: `累计发布 ${conf.num} 篇杂谈`, icon: ScrollText, colorTier: conf.tier, group: 'chatter' });
+      allCatalogBadges.push({ id: idChatter, title: conf.title, typeLabel: '杂谈随笔成就', condition: `累计发布 ${conf.num} 篇杂谈`, icon: MessageCircle, colorTier: conf.tier, group: 'chatter' });
       if (chatters.length >= conf.num) ownedIds.add(idChatter);
     });
 
@@ -303,7 +297,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
     ];
     momentConfig.forEach(conf => {
       const id = `moment-${conf.num}`;
-      allCatalogBadges.push({ id, title: conf.title, typeLabel: '瞬间思绪成就', condition: `累计记录 ${conf.num} 条说说`, icon: Coffee, colorTier: conf.tier, group: 'moment' });
+      allCatalogBadges.push({ id, title: conf.title, typeLabel: '瞬间思绪成就', condition: `累计记录 ${conf.num} 条说说`, icon: Wind, colorTier: conf.tier, group: 'moment' });
       if (moments.length >= conf.num) ownedIds.add(id);
     });
 
@@ -327,7 +321,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
     ];
     friendConfig.forEach(conf => {
       const id = `friend-${conf.num}`;
-      allCatalogBadges.push({ id, title: conf.title, typeLabel: '羁绊结弦成就', condition: `成功结交 ${conf.num} 位友链`, icon: Users, colorTier: conf.tier, group: 'friend' });
+      allCatalogBadges.push({ id, title: conf.title, typeLabel: '羁绊结弦成就', condition: `成功结交 ${conf.num} 位友链`, icon: HeartHandshake, colorTier: conf.tier, group: 'friend' });
       if (totalFriends >= conf.num) ownedIds.add(id);
     });
 
@@ -460,7 +454,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
               </div>
               <div className="flex flex-col">
                 <span className="text-[#e8e4d9] font-serif font-black text-xl tracking-widest flex items-center gap-2">
-                  炼金术士档案 <Award size={18} className="text-[#d4af37]" />
+                  炼金术士档案 <Sparkles size={18} className="text-[#d4af37]" />
                 </span>
                 <span className="text-[#8b6b4a] text-xs font-mono tracking-widest mt-0.5">ALCHEMY RANK</span>
               </div>
@@ -552,7 +546,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
                     <div className="flex items-center gap-4 mb-8">
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
-                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><Award size={14} /> 资质等级徽章 (满级 Lv.50)</span>
+                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><Sparkles size={14} /> 资质等级徽章 (满级 Lv.50)</span>
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
                     </div>
                     <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center">
@@ -563,7 +557,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
                     <div className="flex items-center gap-4 mt-16 mb-8">
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
-                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><FileText size={14} /> 深度文章徽章 (满破 500篇)</span>
+                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><PenLine size={14} /> 深度文章徽章 (满破 500篇)</span>
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
                     </div>
                     <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center">
@@ -574,7 +568,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
                     <div className="flex items-center gap-4 mt-16 mb-8">
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
-                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><ScrollText size={14} /> 杂谈随笔徽章 (满破 500篇)</span>
+                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><MessageCircle size={14} /> 杂谈随笔徽章 (满破 500篇)</span>
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
                     </div>
                     <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center">
@@ -585,7 +579,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
                     <div className="flex items-center gap-4 mt-16 mb-8">
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
-                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><Coffee size={14} /> 瞬间思绪徽章 (满破 800条)</span>
+                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><Wind size={14} /> 瞬间思绪徽章 (满破 800条)</span>
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
                     </div>
                     <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center">
@@ -609,7 +603,7 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
                     {/* 🌟 新增：羁绊结弦徽章区 */}
                     <div className="flex items-center gap-4 mt-16 mb-8">
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
-                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><Users size={14} /> 羁绊结弦徽章 (满破 50人)</span>
+                      <span className="text-[#8b6b4a] text-xs font-black tracking-widest uppercase flex items-center gap-2"><HeartHandshake size={14} /> 羁绊结弦徽章 (满破 50人)</span>
                       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#8b6b4a]/50 to-transparent" />
                     </div>
                     <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center">
@@ -632,17 +626,17 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
           <AnimatePresence mode="popLayout">
             <motion.div key={currentMonthStr} initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -20, opacity: 0 }} transition={{ duration: 0.3 }} className="flex items-center gap-6 text-[#d4af37]">
               <div className="flex flex-col items-center justify-center w-12">
-                <div className="flex items-center gap-1.5"><FileText size={14} className="text-[#3b82f6]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.post}</span></div>
+                <div className="flex items-center gap-1.5"><PenLine size={14} className="text-[#3b82f6]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.post}</span></div>
                 <span className="text-[10px] text-[#8b6b4a] tracking-widest mt-1">深度文章</span>
               </div>
               <div className="w-px h-8 bg-[#8b6b4a]/40" />
               <div className="flex flex-col items-center justify-center w-12">
-                <div className="flex items-center gap-1.5"><ScrollText size={14} className="text-[#f59e0b]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.chatter}</span></div>
+                <div className="flex items-center gap-1.5"><MessageCircle size={14} className="text-[#f59e0b]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.chatter}</span></div>
                 <span className="text-[10px] text-[#8b6b4a] tracking-widest mt-1">杂谈随笔</span>
               </div>
               <div className="w-px h-8 bg-[#8b6b4a]/40" />
               <div className="flex flex-col items-center justify-center w-12">
-                <div className="flex items-center gap-1.5"><Coffee size={14} className="text-[#10b981]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.moment}</span></div>
+                <div className="flex items-center gap-1.5"><Wind size={14} className="text-[#10b981]"/><span className="text-xl font-bold text-[#e8e4d9] font-serif">{stats.moment}</span></div>
                 <span className="text-[10px] text-[#8b6b4a] tracking-widest mt-1">瞬间思绪</span>
               </div>
               <div className="w-px h-8 bg-[#8b6b4a]/40" />
