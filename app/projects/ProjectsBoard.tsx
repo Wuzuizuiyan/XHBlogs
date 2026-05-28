@@ -33,7 +33,7 @@ export default function ProjectsBoard() {
             Projects Matrix
           </h1>
           <p className="text-slate-600 dark:text-slate-400 font-serif">
-            开源项目、科研代码与实验室折腾记录。
+            造了些轮子，搭了些积木，还有些未完成的野心
           </p>
         </div>
       </div>

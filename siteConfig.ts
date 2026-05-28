@@ -56,7 +56,7 @@ export const siteConfig = {
 
   // ── 7. 杂谈板块 ──
   chatterTitle: "杂谈",
-  chatterDescription: "代码、学术与日常的碎片记录",
+  chatterDescription: "雾里拾零，且行且记",
 
   // ── 8. 图床（Lsky Pro）──
   picBedName: "图床",
