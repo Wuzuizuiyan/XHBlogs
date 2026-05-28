@@ -44,9 +44,9 @@ export const siteConfig = {
     github: "https://github.com/Wuzuizuiyan",
     gitee: "",
     google: "",
-    email: "",
-    qq: "1052360232",
-    wechat: "zz0311259898",
+    email: "wuzuizuiyan@163.com",
+    qq: "",
+    wechat: "",
   },
 
   // ── 6. 照片墙 ──
