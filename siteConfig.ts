@@ -109,5 +109,5 @@ export const siteConfig = {
   friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语\n链接：https://www.wuzuizuiyan.cn\n头像：https://你的图床/avatar.jpg",
 
   // ── 16. 等级系统开关 ──
-  enableLevelSystem: false,
+  enableLevelSystem: true,
 };
