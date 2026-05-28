@@ -263,11 +263,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 1. 等级徽章配置 (1~50级满，10个阶段)
     const levelConfig = [
-      { num: 1, tier: 1, title: '旁观' }, { num: 2, tier: 2, title: '试探' },
-      { num: 3, tier: 3, title: '假面' }, { num: 5, tier: 4, title: '笨拙' },
-      { num: 10, tier: 5, title: '练习' }, { num: 15, tier: 6, title: '间奏' },
-      { num: 20, tier: 7, title: '选择' }, { num: 30, tier: 8, title: '真物' },
-      { num: 40, tier: 9, title: '余白' }, { num: 50, tier: 10, title: '共鸣' }
+      { num: 1, tier: 1, title: '初墨' }, { num: 2, tier: 2, title: '浓淡' },
+      { num: 3, tier: 3, title: '枯笔' }, { num: 5, tier: 4, title: '留隙' },
+      { num: 10, tier: 5, title: '间奏' }, { num: 15, tier: 6, title: '断章' },
+      { num: 20, tier: 7, title: '余地' }, { num: 30, tier: 8, title: '未竟' },
+      { num: 40, tier: 9, title: '余白' }, { num: 50, tier: 10, title: '归白' }
     ];
     levelConfig.forEach(conf => {
       const id = `lvl-${conf.num}`;
@@ -277,11 +277,11 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 2. 深度文章 & 杂谈随笔配置 (10~500篇满，10个阶段)
     const postChatterConfig = [
-      { num: 10, tier: 2, title: '初笔' }, { num: 50, tier: 3, title: '半百' },
-      { num: 100, tier: 4, title: '百篇' }, { num: 150, tier: 5, title: '笔耕' },
-      { num: 200, tier: 6, title: '累累' }, { num: 250, tier: 7, title: '泉涌' },
-      { num: 300, tier: 8, title: '三百' }, { num: 400, tier: 9, title: '等身' },
-      { num: 450, tier: 9, title: '心声' }, { num: 500, tier: 10, title: '无倦' }
+      { num: 10, tier: 2, title: '初稿' }, { num: 50, tier: 3, title: '成章' },
+      { num: 100, tier: 4, title: '百页' }, { num: 150, tier: 5, title: '卷帙' },
+      { num: 200, tier: 6, title: '盈尺' }, { num: 250, tier: 7, title: '等身' },
+      { num: 300, tier: 8, title: '满架' }, { num: 400, tier: 9, title: '充栋' },
+      { num: 450, tier: 9, title: '心声' }, { num: 500, tier: 10, title: '长河' }
     ];
     postChatterConfig.forEach(conf => {
       const idPost = `post-${conf.num}`;
@@ -295,11 +295,12 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 3. 瞬间思绪配置 (10~800篇满，10个阶段)
     const momentConfig = [
-      { num: 10, tier: 2, title: '初语' }, { num: 50, tier: 3, title: '碎念' },
-      { num: 100, tier: 4, title: '百念' }, { num: 200, tier: 5, title: '纷至' },
-      { num: 300, tier: 6, title: '回眸' }, { num: 400, tier: 7, title: '心语' },
-      { num: 500, tier: 8, title: '流光' }, { num: 600, tier: 9, title: '繁星' },
-      { num: 700, tier: 9, title: '幻梦' }, { num: 800, tier: 10, title: '无尽' }
+      { num: 10, tier: 2, title: '初语' }, { num: 50, tier: 3, title: '絮语' },
+      { num: 100, tier: 4, title: '回声' }, { num: 150, tier: 5, title: '归燕' },
+      { num: 200, tier: 6, title: '拾光' }, { num: 300, tier: 7, title: '繁星' },
+      { num: 400, tier: 8, title: '长夜' }, { num: 500, tier: 9, title: '破晓' },
+      { num: 600, tier: 9, title: '余音' }, { num: 700, tier: 9, title: '薄暮' },
+      { num: 800, tier: 10, title: '不息' }
     ];
     momentConfig.forEach(conf => {
       const id = `moment-${conf.num}`;
@@ -309,9 +310,9 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 4. 照片墙配置 (10~100张满，3个阶段)
     const photoConfig = [
-      { num: 10, tier: 3, title: '初见' },
-      { num: 50, tier: 6, title: '捕光' },
-      { num: 100, tier: 10, title: '万象' }
+      { num: 10, tier: 3, title: '初帧' },
+      { num: 50, tier: 6, title: '凝光' },
+      { num: 100, tier: 10, title: '千景' }
     ];
     photoConfig.forEach(conf => {
       const id = `photo-${conf.num}`;
@@ -321,9 +322,9 @@ export default function AlchemyLab({ posts = [], chatters = [], moments = [] }: 
 
     // 5. 友链配置 (10~50个满，3个阶段)
     const friendConfig = [
-      { num: 10, tier: 3, title: '初识' },
-      { num: 20, tier: 6, title: '满座' },
-      { num: 50, tier: 10, title: '知己' }
+      { num: 10, tier: 3, title: '初逢' },
+      { num: 20, tier: 6, title: '同路' },
+      { num: 50, tier: 10, title: '天涯' }
     ];
     friendConfig.forEach(conf => {
       const id = `friend-${conf.num}`;
