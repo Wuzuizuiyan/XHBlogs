@@ -16,8 +16,8 @@ export const siteConfig = {
 
   // ── 2. 头像 & 图标 ──
   // 图床外链 或 把图片放 public/ 下用相对路径如 "/avatar.jpg"
-  faviconUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
-  avatarUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
+  faviconUrl: "https://i.ibb.co/vvXLPFCh/avatar.jpg",
+  avatarUrl: "https://i.ibb.co/vvXLPFCh/avatar.jpg",
 
   // ── 3. 背景设置 ──
   useGradient: false,                       // true=渐变色, false=图片轮播
@@ -106,7 +106,7 @@ export const siteConfig = {
   },
 
   // ── 15. 友链申请格式 ──
-  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语，且行切记。\n链接：https://www.wuzuizuiyan.cn\n头像：https://www.wuzuizuiyan.cn/blog-images/avatar.jpg",
+  friendLinkApplyFormat: "名称：雾醉醉言\n简介：雾里醉语，且行切记。\n链接：https://www.wuzuizuiyan.cn\n头像：https://i.ibb.co/vvXLPFCh/avatar.jpg",
 
   // ── 16. 等级系统开关 ──
   enableLevelSystem: true,
