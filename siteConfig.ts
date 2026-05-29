@@ -16,8 +16,8 @@ export const siteConfig = {
 
   // ── 2. 头像 & 图标 ──
   // 图床外链 或 把图片放 public/ 下用相对路径如 "/avatar.jpg"
-  faviconUrl: "/blog-images/avatar.jpg",
-  avatarUrl: "/blog-images/avatar.jpg",
+  faviconUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
+  avatarUrl: "https://free.picui.cn/free/2026/05/28/6a173d79374be.jpg",
 
   // ── 3. 背景设置 ──
   useGradient: false,                       // true=渐变色, false=图片轮播
