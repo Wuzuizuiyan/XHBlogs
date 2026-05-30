@@ -5,23 +5,39 @@ import matter from 'gray-matter';
 // 引入前台客户端组件
 import CreativeWorkshopClient from './CreativeWorkshopClient';
 
+// ── 递归扫描目录，返回所有 .md 文件的相对路径（不含 .md）──
+function walkMdFiles(dir: string, baseDir: string): string[] {
+  const results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkMdFiles(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      results.push(path.relative(baseDir, fullPath).replace(/\.md$/, ''));
+    }
+  }
+  return results;
+}
+
 function getLocalItems(directoryName: string, typeName: string) {
   const dirPath = path.join(process.cwd(), directoryName);
   let items: any[] = [];
   try {
     if (fs.existsSync(dirPath)) {
-      const fileNames = fs.readdirSync(dirPath).filter(f => f.endsWith('.md'));
-      items = fileNames.map(fileName => {
-        const fullPath = path.join(dirPath, fileName);
+      const relPaths = walkMdFiles(dirPath, dirPath);
+      items = relPaths.map(relPath => {
+        const fullPath = path.join(dirPath, relPath + '.md');
         // 🌟 核心：把 content（正文内容）和 data（头部参数）解构出来！
         const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
 
-        // 提取真正的文件名作为路由 slug
-        const realSlug = fileName.replace(/\.md$/, '');
+        // slug 用相对路径，如 '游戏设计/塔防Roguelike'（平铺目录则是纯文件名）
+        const slug = relPath.split(path.sep).map(s => encodeURIComponent(s)).join('/');
 
         return {
-          id: data.id || realSlug,
-          slug: realSlug, // 🌟 强制保留真实的 slug 供路由跳转使用
+          id: data.id || relPath,
+          slug, // 🌟 可能是多层路径或纯文件名
           title: data.title || '',
           type: typeName,
           // 确保 date 是字符串（gray-matter 会自动转 Date 对象）

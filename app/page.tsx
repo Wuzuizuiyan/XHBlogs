@@ -19,6 +19,22 @@ import LatestPostsCarousel from '../components/LatestPostsCarousel';
 import LatestChatterCarousel from '../components/LatestChatterCarousel';
 import DanmakuBackground from '../components/DanmakuBackground';
 
+// ── 递归扫描目录，返回所有 .md 文件的相对路径（不含 .md）──
+function walkMdFiles(dir: string, baseDir: string): string[] {
+  const results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkMdFiles(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      results.push(path.relative(baseDir, fullPath).replace(/\.md$/, ''));
+    }
+  }
+  return results;
+}
+
 function formatUpdateTime(dateString: string) {
   if (!dateString || dateString === '1970-01-01') return '刚刚更新';
   try {
@@ -39,13 +55,15 @@ export default function Home() {
   let allPosts: any[] = [];
   try {
     if (fs.existsSync(postsDirectory)) {
-      const fileNames = fs.readdirSync(postsDirectory).filter(f => f.endsWith('.md'));
-      allPosts = fileNames.map(fileName => {
-        const fullPath = path.join(postsDirectory, fileName);
+      const relPaths = walkMdFiles(postsDirectory, postsDirectory);
+      allPosts = relPaths.map(relPath => {
+        const fullPath = path.join(postsDirectory, relPath + '.md');
         const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
         const rawDate = data.date || '1970-01-01';
+        // slug 用相对路径，如 '游戏设计/塔防Roguelike'
+        const slug = relPath.split(path.sep).map(s => encodeURIComponent(s)).join('/');
         return {
-          slug: fileName.replace(/\.md$/, ''),
+          slug,
           ...data,
           title: data.title || '',
           description: data.description || '',

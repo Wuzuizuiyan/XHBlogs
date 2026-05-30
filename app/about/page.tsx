@@ -20,21 +20,39 @@ import PageTransition from '../../components/PageTransition';
 import AboutClient from '../../components/AboutClient';
 import { Suspense } from 'react';
 
+function walkMdFiles(dir: string, baseDir: string): string[] {
+  const results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkMdFiles(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      results.push(path.relative(baseDir, fullPath).replace(/\.md$/, ''));
+    }
+  }
+  return results;
+}
+
 function getDirActivities(dirName: string, typeLabel: '文章' | '杂谈' | '说说', linkPrefix: string) {
   const dirPath = path.join(process.cwd(), dirName);
   if (!fs.existsSync(dirPath)) return [];
 
-  const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.md'));
+  const relPaths = walkMdFiles(dirPath, dirPath);
 
-  return files.map(file => {
-    const content = fs.readFileSync(path.join(dirPath, file), 'utf8');
+  return relPaths.map(relPath => {
+    const filePath = path.join(dirPath, relPath + '.md');
+    const content = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(content);
+    // slug 用相对路径，如 '游戏设计/塔防Roguelike'
+    const slug = relPath.split(path.sep).map(s => encodeURIComponent(s)).join('/');
     return {
-      id: `${dirName}-${file}`,
+      id: `${dirName}-${relPath}`,
       type: typeLabel,
-      title: data.title || file.replace('.md', ''),
+      title: data.title || path.basename(relPath),
       date: data.date ? new Date(data.date).toISOString() : '1970-01-01T00:00:00Z',
-      url: `/${linkPrefix}/${file.replace('.md', '')}`
+      url: `/${linkPrefix}/${slug}`
     };
   });
 }

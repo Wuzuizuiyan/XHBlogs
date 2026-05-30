@@ -24,17 +24,42 @@ import BackButton from '../../../components/BackButton';
 import Comments from '../../../components/Comments';
 import SidebarLyric from '../../../components/SidebarLyric';
 
+// ── 递归扫描 posts/ 目录，返回所有 .md 文件的相对路径（不含 .md 后缀）──
+function walkPosts(dir: string, baseDir: string): string[] {
+  const results: string[] = [];
+  if (!fs.existsSync(dir)) return results;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkPosts(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      const relPath = path.relative(baseDir, fullPath).replace(/\.md$/, '');
+      results.push(relPath);
+    }
+  }
+  return results;
+}
+
+// ── 将相对路径转为 slug 数组 ──
+function pathToSlug(relPath: string): string[] {
+  return relPath.split(path.sep);
+}
+
+// ── 将 slug 数组转为文件路径 ──
+function slugToPath(slug: string[]): string {
+  return path.join(...slug) + '.md';
+}
+
+// ── 将 slug 数组转为 URL 字符串 ──
+function slugToUrl(slug: string[]): string {
+  return slug.map(s => encodeURIComponent(s)).join('/');
+}
+
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  if (!fs.existsSync(postsDirectory)) return [];
-
-  const filenames = fs.readdirSync(postsDirectory);
-
-  return filenames
-    .filter((name) => name.endsWith('.md'))
-    .map((name) => ({
-      slug: name.replace(/\.md$/, ''),
-    }));
+  const allPaths = walkPosts(postsDirectory, postsDirectory);
+  return allPaths.map(p => ({ slug: pathToSlug(p) }));
 }
 
 function extractToc(content: string) {
@@ -51,10 +76,11 @@ function extractToc(content: string) {
   return toc;
 }
 
-async function getPostData(slug: string) {
-  // 解码 URL 编码的中文文件名
-  const decodedSlug = decodeURIComponent(slug);
-  const fullPath = path.join(process.cwd(), 'posts', `${decodedSlug}.md`);
+async function getPostData(slug: string[]) {
+  // 解码 URL 编码的中文路径（如 %E6%B8%B8 → 游）
+  const decodedSlug = slug.map(s => decodeURIComponent(s));
+  const relPath = slugToPath(decodedSlug);
+  const fullPath = path.join(process.cwd(), 'posts', relPath);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   let { data, content } = matter(fileContents);
 
@@ -65,7 +91,7 @@ async function getPostData(slug: string) {
   // 1. 强行修复数字列表缺少空格导致无法渲染为列表的 Bug (1.百度 -> 1. 百度)
   content = content.replace(/^(\s*\d+)\.([^ \n])/gm, '$1. $2');
 
-  // 2. 🌟 拯救被 Markdown 引擎吞噬的“连续空行”！
+  // 2. 🌟 拯救被 Markdown 引擎吞噬的"连续空行"！
   // 统一换行符，并清理纯空格的废弃空行
   content = content.replace(/\r\n/g, '\n').replace(/^[ \t]+$/gm, '');
 
@@ -108,34 +134,42 @@ async function getPostData(slug: string) {
     : (data.date || '未知时间');
 
   return {
-    slug,
-    contentHtml: processedContent.toString(),
-    toc: extractToc(content),
+    slug: slugToUrl(slug),
     title: data.title,
     date: dateStr,
     tags: data.tags && Array.isArray(data.tags) ? data.tags : [],
-    cover: siteConfig.defaultPostCover
+    cover: siteConfig.defaultPostCover,
+    contentHtml: processedContent.toString(),
+    toc: extractToc(content),
   };
 }
 
-function getRecentPosts(currentSlug: string) {
+function getRecentPosts(currentSlug: string[]) {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  let fileNames: string[] = [];
-  try { fileNames = fs.readdirSync(postsDirectory).filter(f => f.endsWith('.md')); } catch(e) {}
-  if (!fileNames) return [];
-  return fileNames.map(f => {
-    const s = f.replace(/\.md$/, '');
-    const c = fs.readFileSync(path.join(postsDirectory, f), 'utf8');
-    const { data } = matter(c);
-    // 确保 date 是字符串
-    const dateStr = data.date instanceof Date
-      ? data.date.toISOString().slice(0, 19).replace('T', ' ')
-      : (data.date || '未知时间');
-    return { slug: s, title: data.title || '无标题', date: dateStr };
-  }).filter(p => p.slug !== currentSlug).slice(0, 3);
+  const allPaths = walkPosts(postsDirectory, postsDirectory);
+  const currentPath = currentSlug.map(s => decodeURIComponent(s)).join('/');
+
+  return allPaths
+    .filter(p => p !== currentPath)
+    .map(relPath => {
+      const filePath = path.join(postsDirectory, relPath + '.md');
+      try {
+        const c = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(c);
+        const dateStr = data.date instanceof Date
+          ? data.date.toISOString().slice(0, 19).replace('T', ' ')
+          : (data.date || '未知时间');
+        return { slug: slugToUrl(pathToSlug(relPath)), title: data.title || '无标题', date: dateStr };
+      } catch {
+        return null;
+      }
+    })
+    .filter((p): p is NonNullable<typeof p> => p !== null)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
 }
 
-export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
+export default async function Post({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const postData = await getPostData(resolvedParams.slug);
   const recentPosts = getRecentPosts(resolvedParams.slug);
