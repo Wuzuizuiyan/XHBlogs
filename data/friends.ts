@@ -30,7 +30,7 @@ export const friendsData: Friend[] = [
   {
     "id": "橘子",
     "name": "橘子の博客",
-    "url": "[https://www.originblog.xyz/](https://www.originblog.xyz/)",
+    "url": "https://www.originblog.xyz/",
     "description": "与世界漫长交手，最终成为自己",
     "avatar": "https://bu.dusays.com/2026/05/31/6a1b386c94497.png",
     "themeColor": "rgba(99,102,241,0.5)"
