@@ -12,30 +12,51 @@ export const metadata = {
   description: "日常碎片与灵感记录",
 };
 
-export default function ChatterPage() {
-  // 注意：这里我们假设你的 md 文件放在根目录的 chatters 文件夹里
+// 递归扫描 chatters 目录，返回所有 .md 文件
+function walkChatterFiles(dir: string, baseDir: string): { slug: string; filePath: string }[] {
+  const results: { slug: string; filePath: string }[] = [];
+  if (!fs.existsSync(dir)) return results;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkChatterFiles(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      const relPath = path.relative(baseDir, fullPath);
+      const slug = relPath.replace(/\.md$/, '');
+      results.push({ slug, filePath: fullPath });
+    }
+  }
+  return results;
+}
+
+function loadChatters(): Array<{
+  slug: string;
+  title: string;
+  date: string;
+  tags: string[];
+  mood: string;
+  cover: string;
+  content: string;
+}> {
   const chattersDirectory = path.join(process.cwd(), 'chatters');
-  let chatters = [];
 
   try {
-    // 确保文件夹存在
     if (!fs.existsSync(chattersDirectory)) {
       fs.mkdirSync(chattersDirectory);
     }
 
-    const fileNames = fs.readdirSync(chattersDirectory).filter(fileName => fileName.endsWith('.md'));
+    const allFiles = walkChatterFiles(chattersDirectory, chattersDirectory);
 
-    chatters = fileNames.map(fileName => {
-      const slug = fileName.replace(/\.md$/, '');
-      const fileContents = fs.readFileSync(path.join(chattersDirectory, fileName), 'utf8');
+    return allFiles.map(({ slug, filePath }) => {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
       const { data, content } = matter(fileContents);
 
-      // 确保 date 是字符串（gray-matter 会自动转 Date 对象）
       const dateStr = data.date instanceof Date
         ? data.date.toISOString().slice(0, 19).replace('T', ' ')
         : (data.date || '未知时间');
 
-      // 去除 markdown 格式符号用于预览
       const stripMarkdown = (text: string) => {
         return text
           .replace(/#{1,6}\s/g, '')
@@ -46,7 +67,7 @@ export default function ChatterPage() {
           .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
           .replace(/^\s*[-*+]\s/gm, '')
           .replace(/^\s*>\s/gm, '')
-          .replace(/\[\^[^\]]+\]/g, '')  // 脚注引用
+          .replace(/\[\^[^\]]+\]/g, '')
           .replace(/\n{2,}/g, ' ')
           .replace(/\n/g, ' ')
           .trim();
@@ -62,16 +83,20 @@ export default function ChatterPage() {
         cover: siteConfig.chatterDefaultCover,
         content: previewContent || content.substring(0, 200)
       };
-    }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime())); // 按时间倒序
+    }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
   } catch (e) {
     console.error("读取杂谈文件失败:", e);
+    return [];
   }
+}
+
+export default function ChatterPage() {
+  const chatters = loadChatters();
 
   return (
     <div className="min-h-screen relative pb-10">
       <Navbar />
       <PageTransition>
-        {/* 将解析好的数据传递给客户端组件进行瀑布流渲染 */}
         <ChatterBoard chatters={chatters} />
       </PageTransition>
     </div>

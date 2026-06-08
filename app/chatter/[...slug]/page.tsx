@@ -24,21 +24,35 @@ import SidebarLyric from '../../../components/SidebarLyric';
 import BackButton from '../../../components/BackButton';
 import Comments from '../../../components/Comments';
 
-export async function generateStaticParams() {
-  const chattersDirectory = path.join(process.cwd(), 'chatters');
-  if (!fs.existsSync(chattersDirectory)) return [];
-  const filenames = fs.readdirSync(chattersDirectory);
-  return filenames
-    .filter((name) => name.endsWith('.md'))
-    .map((name) => ({
-      slug: name.replace(/\.md$/, ''),
-    }));
+// 递归扫描 chatters 目录，返回所有 .md 文件的 slug 数组（用于 generateStaticParams）
+function walkChatterSlugs(dir: string, baseDir: string): { slug: string[] }[] {
+  const results: { slug: string[] }[] = [];
+  if (!fs.existsSync(dir)) return results;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkChatterSlugs(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      const relPath = path.relative(baseDir, fullPath);
+      const segments = relPath.replace(/\.md$/, '').split(path.sep);
+      results.push({ slug: segments });
+    }
+  }
+  return results;
 }
 
-async function getChatterData(slug: string) {
-  // 解码 URL 编码的中文文件名
-  const decodedSlug = decodeURIComponent(slug);
-  const fullPath = path.join(process.cwd(), 'chatters', `${decodedSlug}.md`);
+export async function generateStaticParams() {
+  const chattersDirectory = path.join(process.cwd(), 'chatters');
+  return walkChatterSlugs(chattersDirectory, chattersDirectory);
+}
+
+async function getChatterData(slug: string[]) {
+  // 逐个解码 URL 编码的路径段，然后拼接
+  const decodedSlug = slug.map(s => decodeURIComponent(s));
+  const relPath = path.join(...decodedSlug) + '.md';
+  const fullPath = path.join(process.cwd(), 'chatters', relPath);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   let { data, content } = matter(fileContents);
@@ -106,7 +120,7 @@ async function getChatterData(slug: string) {
     : (data.date || '未知时间');
 
   return {
-    slug,
+    slug: decodedSlug.join('/'),
     contentHtml: html,
     title: data.title || '碎片记录',
     date: dateStr,
@@ -116,21 +130,37 @@ async function getChatterData(slug: string) {
   };
 }
 
+// 递归扫描获取最近杂谈
+function walkChatterFiles(dir: string, baseDir: string): { slug: string; filePath: string }[] {
+  const results: { slug: string; filePath: string }[] = [];
+  if (!fs.existsSync(dir)) return results;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkChatterFiles(fullPath, baseDir));
+    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+      const relPath = path.relative(baseDir, fullPath);
+      const slug = relPath.replace(/\.md$/, '');
+      results.push({ slug, filePath: fullPath });
+    }
+  }
+  return results;
+}
+
 function getRecentChatters(currentSlug: string) {
   const chattersDirectory = path.join(process.cwd(), 'chatters');
-  let fileNames: string[] = [];
-  try { fileNames = fs.readdirSync(chattersDirectory).filter(f => f.endsWith('.md')); } catch(e) {}
-  if (!fileNames) return [];
+  const allFiles = walkChatterFiles(chattersDirectory, chattersDirectory);
 
-  return fileNames.map(f => {
-    const s = f.replace(/\.md$/, '');
-    const c = fs.readFileSync(path.join(chattersDirectory, f), 'utf8');
+  return allFiles.map(f => {
+    const c = fs.readFileSync(f.filePath, 'utf8');
     const { data } = matter(c);
     // 确保 date 是字符串
     const dateStr = data.date instanceof Date
       ? data.date.toISOString().slice(0, 19).replace('T', ' ')
       : (data.date || '1970-01-01');
-    return { slug: s, title: data.title || '碎片记录', date: dateStr };
+    return { slug: f.slug, title: data.title || '碎片记录', date: dateStr };
   }).filter(p => p.slug !== currentSlug)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
@@ -146,10 +176,10 @@ function generateCalendarMatrix(year: number, month: number, targetDay: number) 
   return { days, targetDay };
 }
 
-export default async function ChatterDetail({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ChatterDetail({ params }: { params: Promise<{ slug: string[] }> }) {
   const resolvedParams = await params;
   const chatterData = await getChatterData(resolvedParams.slug);
-  const recentChatters = getRecentChatters(resolvedParams.slug);
+  const recentChatters = getRecentChatters(chatterData.slug);
 
   const dateObj = new Date(chatterData.date || '2026-03-24');
   const yearStr = dateObj.getFullYear();
