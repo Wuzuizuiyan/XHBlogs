@@ -86,10 +86,24 @@ export default function Home() {
   let allChatters: any[] = [];
   try {
     if (fs.existsSync(chattersDirectory)) {
-      const chatterFiles = fs.readdirSync(chattersDirectory).filter(f => f.endsWith('.md'));
-      allChatters = chatterFiles.map(fileName => {
-        const fullPath = path.join(chattersDirectory, fileName);
-        const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
+      // 递归扫描子目录
+      const walkChatterFiles = (dir: string, base: string): {slug: string, filePath: string}[] => {
+        const results: {slug: string, filePath: string}[] = [];
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        for (const entry of entries) {
+          const full = path.join(dir, entry.name);
+          if (entry.isDirectory()) {
+            results.push(...walkChatterFiles(full, base));
+          } else if (entry.isFile() && entry.name.endsWith('.md')) {
+            const rel = path.relative(base, full);
+            results.push({ slug: rel.replace(/\.md$/, ''), filePath: full });
+          }
+        }
+        return results;
+      };
+      const chatterFiles = walkChatterFiles(chattersDirectory, chattersDirectory);
+      allChatters = chatterFiles.map(({slug, filePath}) => {
+        const { data, content } = matter(fs.readFileSync(filePath, 'utf8'));
         const rawDate = data.date || '1970-01-01';
         const cover = siteConfig.chatterDefaultCover;
         // 去除 markdown 格式符号
@@ -108,7 +122,7 @@ export default function Home() {
             .trim();
         };
         const description = data.description || stripMarkdown(content).substring(0, 60);
-        return { slug: fileName.replace(/\.md$/, ''), title: data.title || '碎片记录', description: description, cover: cover, date: rawDate, formattedDate: formatUpdateTime(rawDate) };
+        return { slug, title: data.title || '碎片记录', description: description, cover: cover, date: rawDate, formattedDate: formatUpdateTime(rawDate) };
       }).sort((a, b) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
