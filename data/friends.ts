@@ -34,5 +34,13 @@ export const friendsData: Friend[] = [
     "description": "与世界漫长交手，最终成为自己",
     "avatar": "https://bu.dusays.com/2026/05/31/6a1b386c94497.png",
     "themeColor": "rgba(99,102,241,0.5)"
+  },
+  {
+    "id": "桃之夭夭",
+    "name": "桃之夭夭的小屋",
+    "url": "https://taozhiyy.top",
+    "description": "桃之夭夭",
+    "avatar": "https://tzyy-1330068502.cos.ap-beijing.myqcloud.com/1.png",
+    "themeColor": "rgba(99,102,241,0.5)"
   }
 ];
