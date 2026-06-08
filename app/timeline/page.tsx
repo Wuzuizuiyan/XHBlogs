@@ -34,10 +34,15 @@ export default function Timeline() {
           tagCounts[tag] = (tagCounts[tag] || 0) + 1;
         });
 
+        // 确保 date 是字符串（防御 gray-matter Date 对象，pitfall 8）
+        const dateStr = data.date instanceof Date
+          ? data.date.toISOString().slice(0, 19).replace('T', ' ')
+          : (data.date || '1970-01-01');
+
         posts.push({
           slug,
           title: data.title || '无标题',
-          date: data.date || '1970-01-01',
+          date: dateStr,
           description: data.description || '',
           tags: postTags,
           cover: siteConfig.defaultPostCover,
