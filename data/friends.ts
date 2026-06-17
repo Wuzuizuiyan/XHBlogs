@@ -42,5 +42,13 @@ export const friendsData: Friend[] = [
     "description": "桃之夭夭",
     "avatar": "https://tzyy-1330068502.cos.ap-beijing.myqcloud.com/1.png",
     "themeColor": "rgba(99,102,241,0.5)"
+  },
+  {
+    "id": "Eliauk",
+    "name": "Eliauk's Blog",
+    "url": "https://eliauk312.top/",
+    "description": "一方天地，记录代码、生活和偶尔的奇思妙想。",
+    "avatar": "https://img.eliauk312.top/avatar/default-avatar.jpg",
+    "themeColor": "rgba(99,102,241,0.5)"
   }
 ];
