@@ -54,7 +54,7 @@ function escapeXml(s: string): string {
 }
 
 export async function GET() {
-  const domain = 'https://www.xinghuisama.top';
+  const domain = 'https://www.wuzuizuiyan.cn';
   const postsDirectory = path.join(process.cwd(), 'posts');
 
   let allPosts: { slug: string; title: string; description: string; date: string }[] = [];
