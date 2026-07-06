@@ -1,7 +1,18 @@
 
 // 🛡️ 由 Obsidian vault/blog/friends/ 自动生成
 
-export interface Friend { id: string; name: string; url: string; description: string; avatar: string; themeColor: string; }
+export interface Friend {
+  id: string;
+  name: string;
+  url: string;
+  description: string;
+  avatar: string;
+  themeColor: string;
+  // 🌟 以下为 Obsidian 同步时可能附带的额外字段（FriendsBoard 未使用，仅为兼容类型）
+  title?: string | number;
+  date?: string;
+  tags?: string[];
+}
 
 export const friendsData: Friend[] = [
   {
