@@ -1,14 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import Link from 'next/link';
 
 import Navbar from '../components/Navbar';
 import PageTransition from '../components/PageTransition';
-import SearchBar from '../components/SearchBar';
 import { siteConfig } from '../siteConfig';
-import CloudPlayer from '../components/CloudPlayer';
-import ThemeToggleBlock from '../components/ThemeToggleBlock';
 import ProfileCard from '../components/ProfileCard';
 import SiteDashboard from '../components/SiteDashboard';
 import { albums } from '../data/albums';
@@ -16,8 +12,28 @@ import LyricBar from '../components/LyricBar';
 import { ToastProvider } from '../components/ToastProvider';
 
 import LatestPostsCarousel from '../components/LatestPostsCarousel';
-import LatestChatterCarousel from '../components/LatestChatterCarousel';
-import DanmakuBackground from '../components/DanmakuBackground';
+import ArchiveStatusCard from '../components/ArchiveStatusCard';
+import InspirationDropCard from '../components/InspirationDropCard';
+import ArchiveEntranceCard from '../components/ArchiveEntranceCard';
+
+export type HomePost = {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  content?: string;
+  date: string;
+  formattedDate: string;
+};
+
+type ChatterPreview = {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  date: string;
+  formattedDate: string;
+};
 
 // ── 递归扫描目录，返回所有 .md 文件的相对路径（不含 .md）──
 function walkMdFiles(dir: string, baseDir: string): string[] {
@@ -52,7 +68,7 @@ function formatUpdateTime(dateString: string) {
 
 export default function Home() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  let allPosts: any[] = [];
+  let allPosts: HomePost[] = [];
   try {
     if (fs.existsSync(postsDirectory)) {
       const relPaths = walkMdFiles(postsDirectory, postsDirectory);
@@ -79,11 +95,11 @@ export default function Home() {
         return b.slug.localeCompare(a.slug);
       });
     }
-  } catch (e) {}
+  } catch {}
   const top5Posts = allPosts.length > 0 ? allPosts.slice(0, 5) : [{ slug: 'none', title: '暂无文章', description: '快去写第一篇吧！', cover: siteConfig.defaultPostCover, date: '', formattedDate: '' }];
 
   const chattersDirectory = path.join(process.cwd(), 'chatters');
-  let allChatters: any[] = [];
+  let allChatters: ChatterPreview[] = [];
   try {
     if (fs.existsSync(chattersDirectory)) {
       // 递归扫描子目录
@@ -130,8 +146,8 @@ export default function Home() {
         return b.slug.localeCompare(a.slug);
       });
     }
-  } catch (e) {}
-  const top5Chatters = allChatters.length > 0 ? allChatters.slice(0, 5) : [{ slug: 'none', title: '暂无记录', description: '记录一段思绪...', cover: siteConfig.chatterDefaultCover, date: '', formattedDate: '' }];
+  } catch {}
+  const top3Chatters = allChatters.length > 0 ? allChatters.slice(0, 3) : [];
 
   const chatterCount = allChatters.length;
   const realPhotoCount = albums.reduce((total, album) => total + album.photos.length, 0);
@@ -139,67 +155,51 @@ export default function Home() {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen relative pb-10">
+      <div className="min-h-screen relative pb-10 !bg-[#efe3cf] bg-[radial-gradient(circle_at_top_left,rgba(251,240,215,0.9),transparent_36%),radial-gradient(circle_at_top_right,rgba(229,204,168,0.55),transparent_30%)]">
         <Navbar />
         <PageTransition>
-          {/* 🌟 调整整体容器的内边距，适应手机端更小的屏幕 */}
-          <div className="w-full max-w-6xl mx-auto mt-24 sm:mt-28 px-4 sm:px-6 lg:px-10 relative z-10">
-            <SearchBar posts={allPosts} />
+          <div className="w-full max-w-7xl mx-auto mt-20 sm:mt-24 px-4 sm:px-6 lg:px-8 relative z-10">
+            <main className="relative rounded-[2rem] sm:rounded-[2.5rem] border !border-white/70 !bg-[#f4ead8]/72 backdrop-blur-xl shadow-[0_25px_80px_rgba(120,93,58,0.22)] px-4 py-5 sm:px-6 sm:py-6 overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none opacity-70 bg-[linear-gradient(90deg,rgba(132,103,65,0.06)_1px,transparent_1px),linear-gradient(180deg,rgba(132,103,65,0.05)_1px,transparent_1px)] bg-[size:28px_28px]" />
+              <div className="absolute -top-10 right-24 h-28 w-28 rounded-full bg-white/35 blur-2xl pointer-events-none" />
+              <div className="absolute left-6 top-20 text-amber-900/15 dark:text-white/10 text-7xl font-serif rotate-[-14deg] pointer-events-none">⌁</div>
 
-            <main className="flex flex-col gap-6 w-full mt-6">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <section className="lg:col-span-8">
+                  <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
+                </section>
 
-              {/* 第一行：个人信息 + 播放器 */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-                {/* 手机上占满1列，电脑上占7列 */}
-                <div className="col-span-1 lg:col-span-7 flex flex-col">
-                    <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
-                </div>
-                {/* 手机上占满1列，电脑上占5列 */}
-                <div className="col-span-1 lg:col-span-5 flex flex-col">
-                    <CloudPlayer/>
-                </div>
-              </div>
+                <section className="lg:col-span-4">
+                  <ArchiveStatusCard />
+                </section>
 
-              {/* 歌词栏 */}
-              <div className="w-full mt-[-10px]"><LyricBar/></div>
-
-              {/* 第二行：文章轮播 + 照片墙 + 说说 + 主题切换 */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-
-                {/* 左侧：文章轮播 (电脑端占4列，手机端排最上面) */}
-                <div className="col-span-1 lg:col-span-4 flex flex-col min-h-[300px]">
+                <section className="lg:col-span-7">
                   <LatestPostsCarousel posts={top5Posts} />
-                </div>
+                </section>
 
-                {/* 右侧：组合面板 (电脑端占8列) */}
-                <div className="col-span-1 lg:col-span-8 flex flex-col gap-6">
+                <section className="lg:col-span-5">
+                  <InspirationDropCard />
+                </section>
 
-                  {/* 照片墙大海报 */}
-                  <Link href="/photowall" className="w-full rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl overflow-hidden transition-all duration-700 hover:scale-[1.02] relative group min-h-[200px] sm:min-h-[220px] flex-shrink-0">
-                    <img src={latestAlbum.cover} className="w-full h-full absolute inset-0 object-cover transition-transform duration-700 group-hover:scale-105 opacity-90"/>
-                    <div className="absolute inset-0 bg-black/30 dark:bg-black/50 group-hover:bg-black/10 transition-colors duration-500"></div>
-                    <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 right-6">
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">{latestAlbum.title}</h3>
-                      <p className="text-white/90 text-sm sm:text-lg line-clamp-1">{latestAlbum.description}</p>
-                    </div>
-                  </Link>
+                <section className="lg:col-span-12">
+                  <ArchiveEntranceCard
+                    photoCover={latestAlbum.cover}
+                    chatterDescription={siteConfig.chatterDescription}
+                    chatters={top3Chatters}
+                  />
+                </section>
 
-                  {/* 底层网格：说说轮播 + 主题切换器 */}
-                  {/* 手机上单列，平板上分3列比例分布 */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full flex-1">
-                    <div className="sm:col-span-2 flex flex-col min-h-[200px]">
-                      <LatestChatterCarousel chatters={top5Chatters} />
-                    </div>
-                    <div className="sm:col-span-1 flex flex-col min-h-[120px]">
-                      <ThemeToggleBlock />
-                    </div>
+                <section className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1fr] gap-4 items-stretch">
+                  <SiteDashboard />
+                  <div className="rounded-2xl border !border-white/70 !bg-white/55 backdrop-blur-md shadow-[0_10px_28px_rgba(122,91,54,0.13)] px-4 py-3 flex items-center">
+                    <LyricBar />
                   </div>
-
-                </div>
+                  <div className="rounded-2xl border !border-white/70 !bg-white/55 backdrop-blur-md shadow-[0_10px_28px_rgba(122,91,54,0.13)] px-4 py-3 flex items-center justify-between text-xs font-bold !text-stone-600">
+                    <span>建站时间</span>
+                    <span className="font-mono !text-stone-500">2026 / 05 / 26</span>
+                  </div>
+                </section>
               </div>
-
-              {/* 底部数据面板 */}
-              <div className="w-full mt-4"><SiteDashboard/></div>
             </main>
           </div>
         </PageTransition>

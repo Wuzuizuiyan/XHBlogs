@@ -38,9 +38,10 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
 
   return (
     // 🌟 核心修改：缩紧整体容器的左右边距 px-3 md:px-10
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-10 py-6 md:py-10 pt-24 md:pt-28 relative z-10">
+    <div className="paper-page w-full px-3 sm:px-10 py-28 relative z-10">
+      <div className="paper-shell max-w-7xl mx-auto p-4 md:p-8">
 
-      <div className="mb-8 md:mb-14 text-center">
+      <div className="paper-title mb-8 md:mb-14 text-center">
         {/* 🌟 核心修改：标题字号响应式 */}
         <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-2 md:mb-4 tracking-tighter">
           {siteConfig.chatterTitle || "杂谈"}
@@ -58,9 +59,9 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
             placeholder="搜寻被遗忘的思绪..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-white/40 dark:border-white/5 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 pl-10 md:pl-14 text-sm md:text-base text-slate-800 dark:text-white shadow-lg md:shadow-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder-slate-400 font-medium"
+            className="w-full bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-white/40 dark:border-white/5 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 pl-10 md:pl-14 text-sm md:text-base text-slate-800 dark:text-white shadow-lg md:shadow-2xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all placeholder-slate-400 font-medium"
           />
-          <svg className="w-4 h-4 md:w-6 md:h-6 absolute left-5 md:left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <svg className="w-4 h-4 md:w-6 md:h-6 absolute left-5 md:left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
         </div>
 
         <div className="flex flex-wrap justify-center gap-1.5 md:gap-2 px-2 md:px-0">
@@ -70,7 +71,7 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
               onClick={() => setActiveTag(tag)}
               className={`px-3 py-1.5 md:px-5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black transition-all duration-500 border ${
                 activeTag === tag 
-                ? 'bg-indigo-500 text-white border-indigo-500 shadow-md md:shadow-lg md:shadow-indigo-500/30 scale-105' 
+                ? 'bg-amber-600 text-white border-amber-600 shadow-md md:shadow-lg md:shadow-amber-500/30 scale-105' 
                 : 'bg-white/30 dark:bg-slate-800/30 text-slate-600 dark:text-slate-400 border-white/20 dark:border-white/5 hover:bg-white/60 dark:hover:bg-slate-700/60'
               }`}
             >
@@ -95,7 +96,7 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
               {/* 🌟 核心修改 2：卡片圆角缩小 rounded-2xl */}
               <Link
                 href={`/chatter/${chatter.slug}`}
-                className="block rounded-2xl md:rounded-[32px] bg-white/40 dark:bg-slate-800/40 backdrop-blur-2xl border border-white/50 dark:border-white/5 shadow-md md:shadow-xl hover:shadow-2xl transition-all duration-500 group relative overflow-hidden"
+                className="block rounded-2xl md:rounded-[32px] bg-white/50 dark:bg-slate-800/40 backdrop-blur-2xl border border-white/60 dark:border-white/5 shadow-md md:shadow-xl hover:shadow-2xl transition-all duration-500 group relative overflow-hidden"
               >
                 {chatter.cover && (
                   // 🌟 核心修改 3：图片高度自适应 h-28 -> h-52
@@ -128,7 +129,7 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
 
                   {chatter.title && (
                     // 🌟 核心修改 6：标题压缩 text-sm md:text-xl
-                    <h3 className="text-sm md:text-xl font-bold text-slate-800 dark:text-white mb-1.5 md:mb-4 leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 md:line-clamp-none">{chatter.title}</h3>
+                    <h3 className="text-sm md:text-xl font-bold text-slate-800 dark:text-white mb-1.5 md:mb-4 leading-tight group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors line-clamp-2 md:line-clamp-none">{chatter.title}</h3>
                   )}
 
                   {/* 🌟 核心修改 7：正文压缩，限制行数 */}
@@ -152,6 +153,7 @@ export default function ChatterBoard({ chatters }: { chatters: Chatter[] }) {
           ))}
         </AnimatePresence>
       </motion.div>
+      </div>
     </div>
   );
 }

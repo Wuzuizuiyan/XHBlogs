@@ -190,13 +190,13 @@ export default async function ChatterDetail({ params }: { params: Promise<{ slug
   const weekDays = ['一', '二', '三', '四', '五', '六', '日'];
 
   return (
-    <div className="min-h-screen relative pb-20">
+    <div className="paper-page min-h-screen relative pb-20">
       <Navbar />
 
       <PageTransition>
         <main className="w-[95%] md:w-[90%] max-w-6xl mx-auto mt-24 md:mt-28 flex flex-col lg:flex-row gap-6 md:gap-8 relative z-10">
 
-          <article className="flex-1 bg-white/60 dark:bg-slate-800/50 backdrop-blur-xl rounded-[40px] shadow-2xl border border-white/40 dark:border-white/10 overflow-hidden transition-colors duration-700">
+          <article className="flex-1 bg-white/70 dark:bg-slate-800/50 backdrop-blur-xl rounded-[40px] shadow-2xl border border-white/70 dark:border-white/10 overflow-hidden transition-colors duration-700">
             {chatterData.cover && (
               <div className="w-full aspect-video bg-slate-200 dark:bg-slate-700 relative group">
                 <img src={chatterData.cover} alt="封面" className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105" />
@@ -206,7 +206,7 @@ export default async function ChatterDetail({ params }: { params: Promise<{ slug
             <div className="p-5 md:p-14 relative">
               <BackButton />
 
-              <header className="mb-6 md:mb-10 border-b border-slate-300/30 dark:border-slate-700/50 pb-5 md:pb-8 relative">
+              <header className="paper-title mb-6 md:mb-10 border-b border-slate-300/30 dark:border-slate-700/50 pb-5 md:pb-8 relative">
                 <h1 className="text-2xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 md:mb-6 tracking-tight transition-colors duration-700 pr-16 md:pr-24 leading-snug md:leading-tight">
                   {chatterData.title}
                 </h1>
@@ -214,7 +214,7 @@ export default async function ChatterDetail({ params }: { params: Promise<{ slug
                 {/* ✅ 前端展示版：特权修改按钮已彻底移除！ */}
 
                 <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                  <div className="flex items-center gap-1.5 md:gap-2 text-indigo-700 dark:text-indigo-400 font-bold bg-indigo-500/5 dark:bg-indigo-400/10 px-3 md:px-4 py-1.5 md:py-2 rounded-2xl text-xs md:text-sm border border-indigo-500/10">
+                  <div className="flex items-center gap-1.5 md:gap-2 text-amber-700 dark:text-amber-400 font-bold bg-amber-500/5 dark:bg-amber-400/10 px-3 md:px-4 py-1.5 md:py-2 rounded-2xl text-xs md:text-sm border border-amber-500/10">
                     <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     {chatterData.date}
                   </div>

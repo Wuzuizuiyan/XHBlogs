@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '../siteConfig';
 
@@ -8,7 +8,15 @@ export default function SplashScreen() {
   const [show, setShow] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  const exitSplash = useCallback(() => {
+    document.documentElement.classList.add('splash-seen');
+    setShow(false);
+    sessionStorage.setItem('hasSeenSplash', 'true');
+  }, []);
+
   useEffect(() => {
+    // SplashScreen 需要在挂载后读取 sessionStorage，避免服务端渲染访问浏览器 API。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
 
@@ -22,17 +30,7 @@ export default function SplashScreen() {
       // 容错处理：确保直接访问时类名存在
       document.documentElement.classList.add('splash-seen');
     }
-  }, []);
-
-  const exitSplash = () => {
-    setShow(false);
-    sessionStorage.setItem('hasSeenSplash', 'true');
-
-    // 【核心解封】：动画快结束时，给 html 加上类名，CSS 会自动把内容显示出来
-    setTimeout(() => {
-      document.documentElement.classList.add('splash-seen');
-    }, 500);
-  };
+  }, [exitSplash]);
 
   if (!isMounted) return null;
 
@@ -61,7 +59,7 @@ export default function SplashScreen() {
             <h1 className="text-2xl font-black text-slate-800 dark:text-white mb-2 tracking-[0.2em] uppercase">
               {siteConfig.authorName}
             </h1>
-            <p className="text-[10px] font-black text-slate-400 tracking-[0.5em] mb-12">INITIALIZING SYSTEM</p>
+            <p className="text-[10px] font-black text-slate-400 tracking-[0.4em] mb-12">正在载入雾中存档</p>
 
             <div className="w-40 h-[1.5px] bg-slate-200 dark:bg-slate-800 relative">
               <motion.div

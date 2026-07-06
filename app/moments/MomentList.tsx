@@ -143,26 +143,27 @@ export default function MomentList({ moments, authorName, avatarUrl }: any) {
   );
 
   return (
-    <div className="w-[95%] md:w-[90%] max-w-6xl mx-auto py-6 md:py-10 mt-24 md:mt-28 relative z-10 flex-1 flex flex-col min-h-[85vh]">
+    <div className="paper-page w-full px-4 md:px-10 py-28 relative z-10 flex-1 flex flex-col min-h-[85vh]">
+      <div className="paper-shell w-full max-w-6xl mx-auto p-4 md:p-8">
 
-      <div className="mb-8 md:mb-14 text-center relative">
+      <div className="paper-title mb-8 md:mb-14 text-center relative">
         <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-2 md:mb-4 tracking-tighter">生活动态</motion.h1>
         <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium italic opacity-80 flex items-center justify-center gap-1.5 md:gap-2">
-          <Sparkles size={12} className="md:w-3.5 md:h-3.5 text-indigo-500" /> “ 在代码之外捕捉瞬间的温度 ”
+          <Sparkles size={12} className="md:w-3.5 md:h-3.5 text-amber-600" /> “ 在代码之外捕捉瞬间的温度 ”
         </p>
       </div>
 
       <div className="mb-10 md:mb-16 flex flex-col items-center gap-5 md:gap-8">
         <div className="relative w-full max-w-lg group px-2 md:px-0">
-          <Search className="w-5 h-5 md:w-6 md:h-6 absolute left-6 md:left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors z-20 pointer-events-none" />
-          <input type="text" placeholder="搜寻被遗忘的记忆..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-white/40 dark:border-white/5 rounded-xl md:rounded-2xl px-5 md:px-6 py-3 md:py-4 pl-12 md:pl-14 text-sm md:text-base text-slate-800 dark:text-white shadow-lg md:shadow-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium relative z-10" />
+          <Search className="w-5 h-5 md:w-6 md:h-6 absolute left-6 md:left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-600 transition-colors z-20 pointer-events-none" />
+          <input type="text" placeholder="搜寻被遗忘的记忆..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-white/40 dark:border-white/5 rounded-xl md:rounded-2xl px-5 md:px-6 py-3 md:py-4 pl-12 md:pl-14 text-sm md:text-base text-slate-800 dark:text-white shadow-lg md:shadow-2xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all font-medium relative z-10" />
         </div>
 
         <div className="flex bg-white/50 dark:bg-slate-800/50 p-1 md:p-1.5 rounded-xl md:rounded-2xl border border-white/50 dark:border-white/10 shadow-sm relative z-10">
-          <button onClick={() => setSortOrder('desc')} className={`flex items-center gap-1.5 md:gap-2 px-4 md:px-6 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black transition-all duration-300 ${sortOrder === 'desc' ? 'bg-indigo-500 text-white shadow-md md:shadow-lg scale-105' : 'text-slate-500 hover:text-indigo-500'}`}>
+          <button onClick={() => setSortOrder('desc')} className={`flex items-center gap-1.5 md:gap-2 px-4 md:px-6 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black transition-all duration-300 ${sortOrder === 'desc' ? 'bg-amber-600 text-white shadow-md md:shadow-lg scale-105' : 'text-slate-500 hover:text-amber-600'}`}>
             <ArrowDownAZ size={12} className="md:w-3.5 md:h-3.5"/> 最新
           </button>
-          <button onClick={() => setSortOrder('asc')} className={`flex items-center gap-1.5 md:gap-2 px-4 md:px-6 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black transition-all duration-300 ${sortOrder === 'asc' ? 'bg-indigo-500 text-white shadow-md md:shadow-lg scale-105' : 'text-slate-500 hover:text-indigo-500'}`}>
+          <button onClick={() => setSortOrder('asc')} className={`flex items-center gap-1.5 md:gap-2 px-4 md:px-6 py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black transition-all duration-300 ${sortOrder === 'asc' ? 'bg-amber-600 text-white shadow-md md:shadow-lg scale-105' : 'text-slate-500 hover:text-amber-600'}`}>
             <ArrowUpZA size={12} className="md:w-3.5 md:h-3.5"/> 最早
           </button>
         </div>
@@ -219,6 +220,7 @@ export default function MomentList({ moments, authorName, avatarUrl }: any) {
         )}
       </AnimatePresence>
 
+      </div>
     </div>
   );
 }

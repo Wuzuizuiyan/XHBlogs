@@ -18,7 +18,7 @@ export default function Navbar() {
   const smoothRotation = useSpring(rawRotation, { stiffness: 200, damping: 25 });
   const inverseRotation = useTransform(smoothRotation, (r) => -r);
 
-  const handlePan = (event: any, info: PanInfo) => {
+  const handlePan = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (!wheelRef.current) return;
     const rect = wheelRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -42,6 +42,8 @@ export default function Navbar() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const vh = window.innerHeight;
+      // 初始化移动端拖拽边界需要读取浏览器视口尺寸。
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConstraints({
         top: -(vh / 2) + 80,
         bottom: (vh / 2) - 80
@@ -87,21 +89,21 @@ export default function Navbar() {
   return (
     <>
       {/* PC端导航栏 */}
-      <header className={`hidden md:block w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${showNav ? 'translate-y-0' : '-translate-y-full'} bg-white/40 dark:bg-slate-900/50 backdrop-blur-xl border-white/20 dark:border-white/5 shadow-sm`}>
-        <div className="w-[90%] max-w-6xl mx-auto h-16 flex items-center justify-between px-4 sm:px-[30px] box-border">
-          <Link href="/" className="text-xl font-black text-slate-800 dark:text-white tracking-tighter hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300">
+      <header className={`hidden md:block w-full fixed top-3 left-0 right-0 z-50 transition-all duration-500 ${showNav ? 'translate-y-0' : '-translate-y-[120%]'}`}>
+        <div className="w-[88%] max-w-7xl mx-auto h-14 flex items-center justify-between px-7 box-border rounded-2xl !bg-[#fffaf0]/80 backdrop-blur-xl border !border-white/80 shadow-[0_12px_35px_rgba(118,88,51,0.18)]">
+          <Link href="/" className="text-xl font-black !text-stone-800 tracking-wider hover:!text-amber-700 transition-all duration-300">
             {siteConfig.navTitle || siteConfig.authorName}
-            <span className="text-indigo-500 mx-1">{siteConfig.navSuffix || 'の'}</span>
+            <span className="!text-amber-700 mx-2">{siteConfig.navSuffix || 'の'}</span>
             {siteConfig.navAfter || '宝藏之地'}
           </Link>
-          <nav className="flex gap-8 text-sm font-bold">
+          <nav className="flex gap-7 text-sm font-bold">
             {/* PC端依然使用全量的 navLinks */}
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname === `${link.href}/`;
               return (
-                <Link key={link.href} href={link.href} className={`relative py-1 transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-700 dark:text-slate-200 hover:text-indigo-600'}`}>
+                <Link key={link.href} href={link.href} className={`relative py-1 transition-colors ${isActive ? '!text-amber-700' : '!text-stone-700 hover:!text-amber-700'}`}>
                   {link.name}
-                  {isActive && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-500 rounded-full animate-pulse"></span>}
+                  {isActive && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span>}
                 </Link>
               );
             })}
