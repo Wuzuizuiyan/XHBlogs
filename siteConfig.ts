@@ -110,4 +110,22 @@ export const siteConfig = {
 
   // ── 16. 等级系统开关 ──
   enableLevelSystem: true,
+
+  // ── 17. 首页存档工作台 ──
+  archiveRoles: ["游戏策划", "写作者", "雾里拾零者"],
+  archiveStatus: {
+    mistLevel: 72,           // 雾浓度 0–100
+    writingMood: "半醒半醉",  // 写作心境
+    backlogLevel: 58,        // 待办堆积 0–100
+    catStatus: "煤球值班中",  // 煤球状态
+    lastSaveLabel: "今日已存档",
+  },
+  inspirationDrops: [
+    "如果关卡是一首诗，玩家读到第几节会停下来？",
+    "雾里的存档点不需要完美，只需要真实。",
+    "未完成的设计稿，也许比成品更接近灵感。",
+    "煤球说：先存档，再摸鱼。",
+    "途经之景不必解释，留下痕迹就好。",
+  ],
+  inspirationFeaturedIndex: 0,
 };
