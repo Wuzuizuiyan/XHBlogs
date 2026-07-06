@@ -40,17 +40,17 @@ export default function PhotoWallClient() {
   }, [activeQuery]);
 
   return (
-    <div className="min-h-screen relative pb-32">
+    <div className="paper-page min-h-screen relative pb-32">
       <Navbar />
 
       <PageTransition>
-        <div className="w-full max-w-7xl mx-auto mt-28 px-4 sm:px-10 relative z-10">
+        <div className="paper-shell w-full max-w-7xl mx-auto mt-28 px-4 sm:px-10 py-8 relative z-10">
 
           {!currentAlbum && (
             <div className="animate-fade-in-up">
-              <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+              <div className="paper-title flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-widest mb-2 transition-colors duration-700">光影画廊</h1>
+                  <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-widest mb-2 transition-colors duration-700">途经之景</h1>
                   <p className="text-slate-600 dark:text-slate-400 font-medium tracking-wider transition-colors duration-700">此处有光，有风，有未命名的瞬间</p>
                 </div>
 
@@ -63,7 +63,7 @@ export default function PhotoWallClient() {
                     placeholder="搜索相册名或照片描述..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-12 pl-12 pr-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-full text-sm text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-sm transition-all duration-700"
+                    className="w-full h-12 pl-12 pr-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-full text-sm text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm transition-all duration-700"
                   />
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default function PhotoWallClient() {
                 {activeQuery && matchedPhotos.length > 0 && (
                   <div className="mb-16">
                     <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2">
-                      <span className="w-2 h-6 bg-indigo-500 rounded-full"></span>
+                    <span className="w-2 h-6 bg-amber-600 rounded-full"></span>
                       匹配的单张照片 ({matchedPhotos.length})
                     </h3>
                     <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
@@ -96,7 +96,7 @@ export default function PhotoWallClient() {
 
                 {activeQuery && matchedAlbums.length > 0 && (
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-6 flex items-center gap-2">
-                    <span className="w-2 h-6 bg-purple-500 rounded-full"></span>
+                    <span className="w-2 h-6 bg-stone-500 rounded-full"></span>
                     相关相册 ({matchedAlbums.length})
                   </h3>
                 )}
@@ -119,14 +119,14 @@ export default function PhotoWallClient() {
                           <img src={album.cover} alt={album.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-5">
                             <span className="text-white font-bold text-lg drop-shadow-md translate-y-2 group-hover:translate-y-0 transition-transform duration-500">{album.photos.length} 张照片</span>
-                            <span className="text-indigo-300 font-medium text-xs mt-1 drop-shadow-md translate-y-2 group-hover:translate-y-0 transition-transform duration-500 delay-75">Click to Open</span>
+                            <span className="text-amber-200 font-medium text-xs mt-1 drop-shadow-md translate-y-2 group-hover:translate-y-0 transition-transform duration-500 delay-75">打开相册</span>
                           </div>
                         </div>
                       </div>
 
                       <div className="text-center px-4 w-full">
                         <div className="flex items-center justify-center gap-2 mb-1">
-                          <h2 className="text-xl font-bold text-slate-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{album.title}</h2>
+                          <h2 className="text-xl font-bold text-slate-900 dark:text-white transition-colors group-hover:text-amber-700 dark:group-hover:text-amber-400">{album.title}</h2>
                           <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 bg-white/60 dark:bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-sm uppercase tracking-wider">{album.date}</span>
                         </div>
                         <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-1">{album.description}</p>
@@ -166,7 +166,7 @@ export default function PhotoWallClient() {
                 </div>
 
                 <div className="text-sm font-bold text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm">
-                  共 <span className="text-indigo-500 dark:text-indigo-400 text-lg">{currentAlbum.photos.length}</span> 瞬间
+                  共 <span className="text-amber-600 dark:text-amber-400 text-lg">{currentAlbum.photos.length}</span> 瞬间
                 </div>
               </div>
 

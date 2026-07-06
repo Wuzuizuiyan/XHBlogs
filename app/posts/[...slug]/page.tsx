@@ -175,12 +175,12 @@ export default async function Post({ params }: { params: Promise<{ slug: string[
   const recentPosts = getRecentPosts(resolvedParams.slug);
 
   return (
-    <div className="min-h-screen relative pb-20">
+    <div className="paper-page min-h-screen relative pb-20">
       <Navbar />
       <PageTransition>
         <main className="w-[95%] md:w-[90%] max-w-6xl mx-auto mt-24 md:mt-28 flex flex-col lg:flex-row gap-6 md:gap-8 relative z-10">
 
-          <article className="flex-1 bg-white/60 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-white/10 overflow-hidden transition-colors duration-700">
+          <article className="flex-1 bg-white/70 dark:bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/70 dark:border-white/10 overflow-hidden transition-colors duration-700">
             <div className="w-full aspect-video bg-slate-200 dark:bg-slate-700 relative group">
               <img src={postData.cover} alt="封面" className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105" />
             </div>
@@ -188,7 +188,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string[
             <div className="p-5 md:p-12 relative">
               <BackButton />
 
-              <header className="mb-6 md:mb-8 border-b border-slate-300/50 dark:border-slate-700 pb-5 md:pb-6 relative">
+              <header className="paper-title mb-6 md:mb-8 border-b border-slate-300/50 dark:border-slate-700 pb-5 md:pb-6 relative">
                 <h1 className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight transition-colors duration-700 pr-16 md:pr-24 leading-snug">
                   {postData.title}
                 </h1>
@@ -196,7 +196,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string[
                 {/* ✅ 前端展示：修改此篇的特权按钮已经彻底移除 */}
 
                 <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                  <div className="flex items-center gap-1.5 md:gap-2 text-indigo-700 dark:text-indigo-400 font-bold bg-white/30 dark:bg-slate-900/50 px-3 md:px-4 py-1.5 md:py-2 rounded-full w-max text-xs md:text-sm transition-colors duration-700 shadow-sm border border-white/20 dark:border-white/5">
+                  <div className="flex items-center gap-1.5 md:gap-2 text-amber-700 dark:text-amber-400 font-bold bg-white/30 dark:bg-slate-900/50 px-3 md:px-4 py-1.5 md:py-2 rounded-full w-max text-xs md:text-sm transition-colors duration-700 shadow-sm border border-white/20 dark:border-white/5">
                     <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     写作时间：{postData.date}
                   </div>

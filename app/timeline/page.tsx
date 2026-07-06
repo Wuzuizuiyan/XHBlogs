@@ -65,7 +65,7 @@ export default function Timeline() {
   return (
     // 🌟 2. 在最外层用 ToastProvider 包裹整个页面
     <ToastProvider>
-      <div className="min-h-screen relative pb-32">
+      <div className="paper-page min-h-screen relative pb-32">
         <Navbar />
         <PageTransition>
           <TimelineClient posts={posts} tags={tagsArray} />

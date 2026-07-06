@@ -118,10 +118,10 @@ export default async function AboutPage() {
   });
 
   return (
-    <div className="min-h-screen relative pb-20">
+    <div className="paper-page min-h-screen relative pb-20">
       <Navbar />
       <PageTransition>
-        <main className="w-[95%] md:w-[90%] max-w-4xl mx-auto mt-24 md:mt-28 relative z-10">
+        <main className="paper-shell w-[95%] md:w-[90%] max-w-4xl mx-auto mt-24 md:mt-28 relative z-10 p-4 md:p-8">
 
           {/* 🌟 注入 About 页面专用的高颜值 Prose 全局样式 */}
           <style dangerouslySetInnerHTML={{ __html: `

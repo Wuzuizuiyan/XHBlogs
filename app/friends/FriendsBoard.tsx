@@ -35,19 +35,20 @@ export default function FriendsBoard() {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-3 sm:px-10 py-6 md:py-10 relative z-10 scroll-smooth mt-20 md:mt-10">
+    <div className="paper-page w-full px-3 sm:px-10 py-28 relative z-10 scroll-smooth">
+      <div className="paper-shell max-w-5xl mx-auto p-4 md:p-8">
 
       {/* 顶部导航与标题 */}
-      <div className="mb-8 md:mb-12 flex flex-col items-center md:items-start">
+      <div className="paper-title mb-8 md:mb-12 flex flex-col items-center md:items-start">
         <div className="w-full flex justify-start mb-4 md:mb-6">
           <BackButton />
         </div>
         <div className="text-center md:text-left w-full px-2 md:px-0">
           <h1 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 md:mb-4 tracking-widest drop-shadow-sm uppercase">
-            云端引力
+            雾中来客
           </h1>
           <p className="text-xs md:text-base text-slate-600 dark:text-slate-400 font-serif">
-            那些散落在赛博宇宙各处的有趣灵魂与神经节点。
+            一些在雾里互相点灯的朋友与途经此地的人。
           </p>
         </div>
       </div>
@@ -74,17 +75,17 @@ export default function FriendsBoard() {
 
               <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-5 relative z-10 mb-2 md:mb-4">
 
-                <div className="w-10 h-10 md:w-16 md:h-16 rounded-full p-[2px] md:p-1 bg-gradient-to-tr from-indigo-500/50 to-purple-500/50 shadow-sm md:shadow-md group-hover:rotate-[360deg] transition-transform duration-1000 ease-in-out flex-shrink-0">
+                <div className="w-10 h-10 md:w-16 md:h-16 rounded-full p-[2px] md:p-1 bg-gradient-to-tr from-amber-500/50 to-stone-400/50 shadow-sm md:shadow-md group-hover:rotate-[360deg] transition-transform duration-1000 ease-in-out flex-shrink-0">
                   <img src={friend.avatar} alt={friend.name} className="w-full h-full rounded-full object-cover bg-white" />
                 </div>
 
                 <div className="flex-1 overflow-hidden w-full">
-                  <h2 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate">
+                  <h2 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors truncate">
                     {friend.name}
                   </h2>
-                  <div className="text-[9px] md:text-xs font-bold text-indigo-500/70 dark:text-indigo-400/70 tracking-widest uppercase mt-0.5 md:mt-1 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-                    Online
+                  <div className="text-[9px] md:text-xs font-bold text-amber-700/70 dark:text-amber-400/70 tracking-widest uppercase mt-0.5 md:mt-1 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    已存档
                   </div>
                 </div>
               </div>
@@ -106,10 +107,10 @@ export default function FriendsBoard() {
         className="mt-14 md:mt-20 bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 rounded-2xl md:rounded-3xl p-5 md:p-8 max-w-3xl mx-auto text-center shadow-lg md:shadow-xl relative"
       >
         <h2 className="text-lg md:text-2xl font-black text-slate-900 dark:text-white mb-2 md:mb-4 tracking-wider">
-          ✨ 建立神经连接
+          交换存档点
         </h2>
         <p className="text-xs md:text-base text-slate-600 dark:text-slate-400 font-serif mb-4 md:mb-6">
-          欢迎各位大佬交换友链！请一键复制下方格式，并在底部的 Gitalk 留言板申请：
+          欢迎交换友链。请复制下方格式，并在底部留言区留下你的灯。
         </p>
 
         {/* 代码展示框 & 一键复制按钮 */}
@@ -138,9 +139,9 @@ export default function FriendsBoard() {
         <div className="mt-6 md:mt-8">
           <a
             href="#gitalk-container"
-            className="inline-block px-6 py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white rounded-full text-sm md:text-base font-bold tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-indigo-500/30"
+            className="inline-block px-6 py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-amber-600 to-stone-500 hover:from-amber-700 hover:to-stone-600 text-white rounded-full text-sm md:text-base font-bold tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-amber-500/30"
           >
-            前往留言区申请 👇
+            前往留言区
           </a>
         </div>
       </motion.div>
@@ -157,7 +158,7 @@ export default function FriendsBoard() {
         <div className="flex items-center justify-center gap-2 md:gap-3 mb-4 md:mb-6">
           <span className="w-8 md:w-12 h-[1px] bg-slate-300 dark:bg-slate-700"></span>
           <h3 className="text-sm md:text-xl font-bold text-slate-800 dark:text-gray-200 tracking-widest uppercase">
-            终端留言板
+            雾中留言
           </h3>
           <span className="w-8 md:w-12 h-[1px] bg-slate-300 dark:bg-slate-700"></span>
         </div>
@@ -165,7 +166,7 @@ export default function FriendsBoard() {
         {/* 渲染评论组件 */}
         <Comments />
       </motion.div>
-
+      </div>
     </div>
   );
 }

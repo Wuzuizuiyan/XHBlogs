@@ -170,3 +170,90 @@ input[type=range]::-webkit-slider-thumb {
 .prose p > a[href^="#fnref"] {
   display: none;
 }
+
+/* ========================================================
+   8. 统一暖纸视觉框架
+   ======================================================== */
+@layer components {
+  .paper-page {
+    @apply min-h-screen relative;
+    background:
+      radial-gradient(circle at 10% 12%, rgba(255, 248, 235, 0.95), transparent 32%),
+      radial-gradient(circle at 88% 8%, rgba(221, 194, 151, 0.45), transparent 28%),
+      linear-gradient(135deg, rgba(242, 230, 210, 0.96), rgba(233, 218, 195, 0.94)) !important;
+  }
+
+  .paper-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      linear-gradient(90deg, rgba(132, 103, 65, 0.045) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(132, 103, 65, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.55;
+  }
+
+  .paper-shell {
+    @apply relative z-10 rounded-[2rem] border backdrop-blur-xl overflow-hidden;
+    background: rgba(244, 234, 216, 0.72) !important;
+    border-color: rgba(255, 255, 255, 0.72) !important;
+    box-shadow: 0 25px 80px rgba(120, 93, 58, 0.18) !important;
+  }
+
+  .paper-title {
+    @apply relative rounded-3xl border backdrop-blur-md px-6 py-6 md:px-8 md:py-8;
+    background: rgba(255, 250, 240, 0.76) !important;
+    border-color: rgba(255, 255, 255, 0.78) !important;
+    box-shadow: 0 18px 45px rgba(133, 101, 59, 0.14) !important;
+  }
+
+  .paper-page :is(h1, h2, h3) {
+    color: rgb(68 52 34) !important;
+  }
+
+  .paper-page :is(p, span, div) {
+    border-color: rgba(214, 190, 154, 0.55);
+  }
+
+  .paper-page :is(input, textarea) {
+    background: rgba(255, 250, 240, 0.68) !important;
+    border-color: rgba(255, 255, 255, 0.75) !important;
+    color: rgb(68 52 34) !important;
+    box-shadow: 0 10px 28px rgba(122, 91, 54, 0.1) !important;
+  }
+
+  .paper-page :is(input, textarea)::placeholder {
+    color: rgba(120, 93, 58, 0.62) !important;
+  }
+
+  .paper-page [class*="bg-white/"],
+  .paper-page [class*="dark:bg-slate"],
+  .paper-page [class*="dark:bg-black"],
+  .paper-page [class*="bg-slate-800"],
+  .paper-page [class*="bg-slate-900"] {
+    background-color: rgba(255, 250, 240, 0.72) !important;
+  }
+
+  .paper-page [class*="text-slate"],
+  .paper-page [class*="dark:text-slate"],
+  .paper-page [class*="dark:text-white"] {
+    color: rgb(87 65 43) !important;
+  }
+
+  .paper-page [class*="text-indigo"],
+  .paper-page [class*="dark:text-indigo"],
+  .paper-page [class*="text-purple"],
+  .paper-page [class*="dark:text-purple"] {
+    color: rgb(180 83 9) !important;
+  }
+
+  .paper-page [class*="bg-indigo"],
+  .paper-page [class*="dark:bg-indigo"],
+  .paper-page [class*="bg-purple"],
+  .paper-page [class*="dark:bg-purple"] {
+    background-color: rgba(180, 83, 9, 0.82) !important;
+  }
+}

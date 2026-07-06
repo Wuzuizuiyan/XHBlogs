@@ -117,7 +117,7 @@ export default function MusicClient() {
 
   if (isLoading || !currentSong) {
     return (
-      <div className="min-h-screen relative pb-32 flex flex-col">
+      <div className="paper-page min-h-screen relative pb-32 flex flex-col">
         <Navbar />
         <div className="flex-1 flex flex-col items-center justify-center animate-pulse gap-4">
           <Disc3 size={48} className="text-indigo-500 animate-spin" />
@@ -130,18 +130,18 @@ export default function MusicClient() {
   const songCover = currentSong.cover || currentSong.pic || "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=1000&auto=format&fit=crop";
 
   return (
-    <div className="min-h-screen relative pb-10 flex flex-col">
+    <div className="paper-page min-h-screen relative pb-10 flex flex-col">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-[-10%] bg-cover bg-center transition-all duration-1000 blur-[50px] opacity-40 dark:opacity-20 saturate-150" style={{ backgroundImage: `url(${songCover})` }} />
-        <div className="absolute inset-0 bg-white/40 dark:bg-black/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-[#efe3cf]/55 backdrop-blur-sm" />
       </div>
 
       <Navbar />
 
       <PageTransition>
-        <div className="w-full max-w-7xl mx-auto mt-24 md:mt-28 px-4 sm:px-6 md:px-10 relative z-10">
-          <div className="animate-fade-in-up mb-6 md:mb-10 text-center md:text-left">
-            <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-widest mb-1 md:mb-2 transition-colors duration-700">云端乐律</h1>
+        <div className="paper-shell w-full max-w-7xl mx-auto mt-24 md:mt-28 px-4 sm:px-6 md:px-10 py-8 relative z-10">
+          <div className="paper-title animate-fade-in-up mb-6 md:mb-10 text-center md:text-left">
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-widest mb-1 md:mb-2 transition-colors duration-700">雾中乐章</h1>
             <p className="text-xs md:text-base text-slate-600 dark:text-slate-400 font-medium tracking-wider transition-colors duration-700">音符落下时，雾也散了几分</p>
           </div>
 
