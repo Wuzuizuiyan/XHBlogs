@@ -97,7 +97,6 @@ async function getChatterData(slug: string[]) {
     .use(remarkGfm)
     .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
-    // @ts-expect-error rehypeHighlight 的选项类型与 unified 管道声明不完全匹配
     .use(rehypeHighlight, {
       detect: true,
       ignoreMissing: true,
