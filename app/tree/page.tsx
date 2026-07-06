@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 
 // 引入前台客户端组件
 import CreativeWorkshopClient from './CreativeWorkshopClient';
+import { CreativeItem } from '../../lib/types';
 
 // ── 递归扫描目录，返回所有 .md 文件的相对路径（不含 .md）──
 function walkMdFiles(dir: string, baseDir: string): string[] {
@@ -23,7 +24,7 @@ function walkMdFiles(dir: string, baseDir: string): string[] {
 
 function getLocalItems(directoryName: string, typeName: string) {
   const dirPath = path.join(process.cwd(), directoryName);
-  let items: any[] = [];
+  let items: CreativeItem[] = [];
   try {
     if (fs.existsSync(dirPath)) {
       const relPaths = walkMdFiles(dirPath, dirPath);

@@ -4,8 +4,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PostMeta } from '../lib/types';
 
-export default function LatestChatterCarousel({ chatters }: { chatters: any[] }) {
+export default function LatestChatterCarousel({ chatters }: { chatters: PostMeta[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

@@ -14,6 +14,7 @@ import SiteDashboard from '../components/SiteDashboard';
 import { albums } from '../data/albums';
 import LyricBar from '../components/LyricBar';
 import { ToastProvider } from '../components/ToastProvider';
+import { PostMeta } from '../lib/types';
 
 import LatestPostsCarousel from '../components/LatestPostsCarousel';
 import LatestChatterCarousel from '../components/LatestChatterCarousel';
@@ -52,7 +53,7 @@ function formatUpdateTime(dateString: string) {
 
 export default function Home() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  let allPosts: any[] = [];
+  let allPosts: PostMeta[] = [];
   try {
     if (fs.existsSync(postsDirectory)) {
       const relPaths = walkMdFiles(postsDirectory, postsDirectory);
@@ -83,7 +84,7 @@ export default function Home() {
   const top5Posts = allPosts.length > 0 ? allPosts.slice(0, 5) : [{ slug: 'none', title: '暂无文章', description: '快去写第一篇吧！', cover: siteConfig.defaultPostCover, date: '', formattedDate: '' }];
 
   const chattersDirectory = path.join(process.cwd(), 'chatters');
-  let allChatters: any[] = [];
+  let allChatters: PostMeta[] = [];
   try {
     if (fs.existsSync(chattersDirectory)) {
       // 递归扫描子目录

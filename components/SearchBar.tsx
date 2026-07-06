@@ -3,15 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-
-interface Post {
-  slug: string;
-  title?: string;
-  description?: string;
-  tags?: string[];
-  date?: string;
-  [key: string]: any;
-}
+import { PostMeta } from '../lib/types';
 
 const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -39,7 +31,7 @@ const Highlight = ({ text = '', query = '' }) => {
   );
 };
 
-export default function SearchBar({ posts = [] }: { posts: Post[] }) {
+export default function SearchBar({ posts = [] }: { posts: PostMeta[] }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
