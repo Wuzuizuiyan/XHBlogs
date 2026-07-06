@@ -9,13 +9,9 @@ export default function SplashScreen() {
   const [isMounted, setIsMounted] = useState(false);
 
   const exitSplash = useCallback(() => {
+    document.documentElement.classList.add('splash-seen');
     setShow(false);
     sessionStorage.setItem('hasSeenSplash', 'true');
-
-    // 【核心解封】：动画快结束时，给 html 加上类名，CSS 会自动把内容显示出来
-    setTimeout(() => {
-      document.documentElement.classList.add('splash-seen');
-    }, 500);
   }, []);
 
   useEffect(() => {
@@ -25,7 +21,6 @@ export default function SplashScreen() {
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
 
     if (!hasSeenSplash) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShow(true);
       const timer = setTimeout(() => {
         exitSplash();

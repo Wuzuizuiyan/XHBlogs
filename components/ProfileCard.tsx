@@ -17,43 +17,47 @@ export default function ProfileCard({ postCount, chatterCount, photoCount }: { p
   return (
     <div
       onClick={() => router.push('/about')}
-      className="rounded-[2rem] bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 md:p-8 transition-all duration-700 hover:scale-[1.01] cursor-pointer group relative overflow-hidden h-full min-h-[260px]"
+      className="rounded-3xl !bg-[#fffaf0]/78 backdrop-blur-md border !border-white/80 shadow-[0_18px_45px_rgba(133,101,59,0.18)] p-5 sm:p-6 md:p-8 transition-all duration-700 hover:-translate-y-0.5 cursor-pointer group relative overflow-hidden h-full min-h-[250px]"
     >
       {/* 暖雾底色 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-slate-100/10 dark:from-amber-900/5 dark:to-transparent pointer-events-none" />
-      <div className="absolute left-0 top-0 h-full w-2 bg-gradient-to-b from-amber-400/70 via-stone-300/50 to-slate-400/50 pointer-events-none" />
-      <div className="absolute right-5 top-5 hidden sm:block text-right pointer-events-none">
-        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">Save Slot</p>
-        <p className="font-mono text-3xl font-black text-amber-500/30 dark:text-amber-300/20">01</p>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_35%,rgba(173,141,92,0.14),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.45),transparent_42%)] pointer-events-none" />
+      <div className="absolute right-6 top-7 hidden sm:block h-24 w-24 rounded-full border border-stone-300/40 opacity-60 pointer-events-none" />
+      <div className="absolute right-8 top-9 hidden sm:block text-right pointer-events-none rotate-[-8deg]">
+        <p className="text-[9px] font-black uppercase tracking-[0.25em] text-stone-400 dark:text-slate-500">Archive Seal</p>
+        <p className="font-serif text-2xl font-black text-stone-400/35 dark:text-slate-300/15">雾</p>
       </div>
 
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_minmax(0,1fr)] gap-5 md:gap-7">
         <div className="flex md:flex-col items-center md:items-start gap-4">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl bg-gradient-to-tr from-amber-400/80 to-slate-400/80 p-1 shadow-lg flex-shrink-0 transition-transform duration-500 group-hover:rotate-3">
-            <img src={siteConfig.avatarUrl} alt="avatar" className="w-full h-full rounded-lg md:rounded-xl object-cover bg-white" />
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-white/70 p-1.5 shadow-[0_8px_30px_rgba(116,86,50,0.18)] border border-white/80 flex-shrink-0 transition-transform duration-500 group-hover:rotate-2">
+            <img src={siteConfig.avatarUrl} alt="avatar" className="w-full h-full rounded-full object-cover bg-white grayscale-[0.08] sepia-[0.08]" />
           </div>
-          <div className="hidden md:block rounded-2xl border border-dashed border-slate-300/60 dark:border-slate-600/60 px-3 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
-            Archive Owner
+          <div className="hidden md:block relative rounded-sm border border-stone-300/70 bg-[#e4cfaa]/60 px-4 py-2 text-[10px] font-black tracking-[0.15em] text-stone-600 shadow-sm rotate-[-2deg]">
+            <span className="block">拾零者证</span>
+            <span className="block font-mono text-[9px] text-stone-500">No.0001024</span>
           </div>
         </div>
 
         <div className="min-w-0 flex flex-col justify-between gap-6">
           <div>
-            <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-1">
+            <p className="text-[10px] sm:text-xs font-black tracking-[0.18em] !text-stone-500 mb-1">
               个人存档点
             </p>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 pb-1 leading-tight tracking-wider transition-colors duration-700 truncate">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black !text-stone-800 mb-2 pb-1 leading-tight tracking-wider transition-colors duration-700 truncate">
               {siteConfig.authorName}
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-700 dark:text-slate-300 font-medium leading-relaxed max-w-md transition-colors duration-700 line-clamp-2 md:line-clamp-none">
-              {siteConfig.bio}
+            <p className="text-xs sm:text-sm md:text-base !text-stone-600 font-medium leading-relaxed max-w-md transition-colors duration-700 line-clamp-2 md:line-clamp-none">
+              游戏策划 / 写作者 / 雾里拾零者
+            </p>
+            <p className="mt-3 text-sm !text-stone-600 font-serif tracking-wider">
+              “ 白天写策划案，晚上写碎语 ”
             </p>
             {roles.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {roles.map((role) => (
                   <span
                     key={role}
-                    className="px-2 py-0.5 text-[10px] sm:text-xs font-bold rounded-full bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-white/40 dark:border-white/10"
+                    className="px-2 py-0.5 text-[10px] sm:text-xs font-bold rounded-full !bg-white/45 !text-stone-600 border border-stone-200/70"
                   >
                     {role}
                   </span>
@@ -84,9 +88,9 @@ export default function ProfileCard({ postCount, chatterCount, photoCount }: { p
 
 function StatItem({ count, label, color }: { count: number, label: string, color: string }) {
   return (
-    <div className="rounded-2xl bg-white/35 dark:bg-slate-700/30 border border-white/40 dark:border-white/10 px-3 py-2 text-left group/stat">
+    <div className="rounded-xl !bg-white/45 border border-stone-200/70 px-3 py-2 text-left group/stat shadow-sm">
       <div className={`text-xl md:text-2xl font-black ${color} transition-transform group-hover/stat:scale-110`}>{count}</div>
-      <div className="text-[9px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">{label}</div>
+      <div className="text-[9px] md:text-[10px] font-bold !text-stone-500 uppercase tracking-widest mt-0.5">{label}</div>
     </div>
   );
 }
@@ -107,7 +111,7 @@ function SocialBtn({ type, url, onClick }: { type: string, url?: string, onClick
   const content = (
     <div
       onClick={onClick}
-      className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-white/50 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-700 dark:hover:text-white transition-all duration-300 border border-white/40 dark:border-white/10 shadow-sm"
+      className="w-9 h-9 md:w-10 md:h-10 rounded-xl !bg-white/45 flex items-center justify-center !text-stone-600 hover:!bg-amber-600 hover:!text-white transition-all duration-300 border border-stone-200/70 shadow-sm"
       title={type}
     >
       {getIcon()}

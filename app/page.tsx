@@ -4,9 +4,7 @@ import matter from 'gray-matter';
 
 import Navbar from '../components/Navbar';
 import PageTransition from '../components/PageTransition';
-import SearchBar from '../components/SearchBar';
 import { siteConfig } from '../siteConfig';
-import CloudPlayer from '../components/CloudPlayer';
 import ProfileCard from '../components/ProfileCard';
 import SiteDashboard from '../components/SiteDashboard';
 import { albums } from '../data/albums';
@@ -149,6 +147,7 @@ export default function Home() {
       });
     }
   } catch {}
+  const top3Chatters = allChatters.length > 0 ? allChatters.slice(0, 3) : [];
 
   const chatterCount = allChatters.length;
   const realPhotoCount = albums.reduce((total, album) => total + album.photos.length, 0);
@@ -156,74 +155,50 @@ export default function Home() {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen relative pb-10">
+      <div className="min-h-screen relative pb-10 !bg-[#efe3cf] bg-[radial-gradient(circle_at_top_left,rgba(251,240,215,0.9),transparent_36%),radial-gradient(circle_at_top_right,rgba(229,204,168,0.55),transparent_30%)]">
         <Navbar />
         <PageTransition>
-          {/* 🌟 调整整体容器的内边距，适应手机端更小的屏幕 */}
-          <div className="w-full max-w-6xl mx-auto mt-24 sm:mt-28 px-4 sm:px-6 lg:px-10 relative z-10">
-            <section className="relative overflow-hidden rounded-[2rem] border border-white/40 dark:border-white/10 bg-white/35 dark:bg-slate-900/45 backdrop-blur-xl shadow-2xl px-5 py-6 sm:px-8 sm:py-8">
-              <div className="absolute -top-24 right-10 h-56 w-56 rounded-full bg-amber-200/25 dark:bg-amber-500/10 blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-24 left-8 h-48 w-48 rounded-full bg-slate-300/20 dark:bg-indigo-500/10 blur-3xl pointer-events-none" />
-              <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6 lg:items-end">
-                <div>
-                  <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.35em] text-amber-700/80 dark:text-amber-300/80 mb-3">
-                    Save Slot 01 / Mist Archive
-                  </p>
-                  <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-950 dark:text-white leading-tight">
-                    雾中存档工作台
-                  </h1>
-                  <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
-                    一个游戏策划的个人存档点：把策划案、碎语、照片和未完成的灵感先收进雾里，等它们慢慢长出形状。
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {siteConfig.archiveRoles?.map((role) => (
-                      <span key={role} className="rounded-full border border-white/50 dark:border-white/10 bg-white/45 dark:bg-slate-800/45 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-sm">
-                        {role}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="lg:justify-self-end w-full">
-                  <SearchBar posts={allPosts} />
-                </div>
-              </div>
-            </section>
+          <div className="w-full max-w-7xl mx-auto mt-20 sm:mt-24 px-4 sm:px-6 lg:px-8 relative z-10">
+            <main className="relative rounded-[2rem] sm:rounded-[2.5rem] border !border-white/70 !bg-[#f4ead8]/72 backdrop-blur-xl shadow-[0_25px_80px_rgba(120,93,58,0.22)] px-4 py-5 sm:px-6 sm:py-6 overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none opacity-70 bg-[linear-gradient(90deg,rgba(132,103,65,0.06)_1px,transparent_1px),linear-gradient(180deg,rgba(132,103,65,0.05)_1px,transparent_1px)] bg-[size:28px_28px]" />
+              <div className="absolute -top-10 right-24 h-28 w-28 rounded-full bg-white/35 blur-2xl pointer-events-none" />
+              <div className="absolute left-6 top-20 text-amber-900/15 dark:text-white/10 text-7xl font-serif rotate-[-14deg] pointer-events-none">⌁</div>
 
-            <main className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-6 w-full mt-6 items-start">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <section className="lg:col-span-8">
+                  <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
+                </section>
 
-              {/* 左侧主舞台：作者档案、最新拾零和入口区 */}
-              <section className="flex flex-col gap-6 min-w-0">
-                <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
+                <section className="lg:col-span-4">
+                  <ArchiveStatusCard />
+                </section>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.85fr)] gap-6">
+                <section className="lg:col-span-7">
                   <LatestPostsCarousel posts={top5Posts} />
-                  <div className="flex flex-col gap-6">
-                    <InspirationDropCard />
-                    <div className="rounded-3xl bg-white/35 dark:bg-slate-800/45 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl overflow-hidden p-4">
-                      <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-3">Background Track</p>
-                      <LyricBar />
-                    </div>
+                </section>
+
+                <section className="lg:col-span-5">
+                  <InspirationDropCard />
+                </section>
+
+                <section className="lg:col-span-12">
+                  <ArchiveEntranceCard
+                    photoCover={latestAlbum.cover}
+                    chatterDescription={siteConfig.chatterDescription}
+                    chatters={top3Chatters}
+                  />
+                </section>
+
+                <section className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr_1fr] gap-4 items-stretch">
+                  <SiteDashboard />
+                  <div className="rounded-2xl border !border-white/70 !bg-white/55 backdrop-blur-md shadow-[0_10px_28px_rgba(122,91,54,0.13)] px-4 py-3 flex items-center">
+                    <LyricBar />
                   </div>
-                </div>
-
-                <ArchiveEntranceCard
-                  photoCover={latestAlbum.cover}
-                  chatterDescription={siteConfig.chatterDescription}
-                />
-              </section>
-
-              {/* 右侧侧栏：今日状态和音乐氛围，不再占据首页主轴 */}
-              <aside className="flex flex-col gap-6 xl:sticky xl:top-24">
-                <ArchiveStatusCard />
-                <div className="relative">
-                  <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-amber-300/10 to-slate-400/10 blur-xl pointer-events-none" />
-                  <CloudPlayer />
-                </div>
-              </aside>
-
-              {/* 底部：存档点状态栏 */}
-              <div className="xl:col-span-2 w-full mt-2">
-                <SiteDashboard />
+                  <div className="rounded-2xl border !border-white/70 !bg-white/55 backdrop-blur-md shadow-[0_10px_28px_rgba(122,91,54,0.13)] px-4 py-3 flex items-center justify-between text-xs font-bold !text-stone-600">
+                    <span>建站时间</span>
+                    <span className="font-mono !text-stone-500">2026 / 05 / 26</span>
+                  </div>
+                </section>
               </div>
             </main>
           </div>
