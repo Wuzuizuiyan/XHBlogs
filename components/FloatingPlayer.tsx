@@ -11,6 +11,8 @@ export default function FloatingPlayer() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // 挂载守卫：避免 SSR 与客户端音乐状态不一致导致 hydration 报错
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import { mulberry32 } from '../lib/prng';
 
 interface LightParticle {
   id: number;
@@ -21,19 +22,18 @@ const colors = [
 ];
 
 export default function SunriseParticles() {
-  const [particles, setParticles] = useState<LightParticle[]>([]);
-
-  useEffect(() => {
-    const generated: LightParticle[] = Array.from({ length: 45 }).map((_, i) => ({
+  // 使用确定性随机在 render 期生成，保证 SSR/CSR 一致且避免挂载后额外重渲染
+  const particles = useMemo<LightParticle[]>(() => {
+    const rand = mulberry32(0x53554e52);
+    return Array.from({ length: 45 }).map((_, i) => ({
       id: i,
-      left: `${Math.random() * 100}%`,
-      size: 2 + Math.random() * 5,
-      duration: 8 + Math.random() * 10,
-      delay: Math.random() * -18,
-      drift: (Math.random() - 0.5) * 10,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      left: `${rand() * 100}%`,
+      size: 2 + rand() * 5,
+      duration: 8 + rand() * 10,
+      delay: rand() * -18,
+      drift: (rand() - 0.5) * 10,
+      color: colors[Math.floor(rand() * colors.length)],
     }));
-    setParticles(generated);
   }, []);
 
   return (

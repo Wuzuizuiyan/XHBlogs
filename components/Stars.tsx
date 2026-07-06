@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import { mulberry32 } from '../lib/prng';
 
 interface Star {
   id: number;
@@ -12,18 +13,17 @@ interface Star {
 }
 
 export default function Stars() {
-  const [stars, setStars] = useState<Star[]>([]);
-
-  useEffect(() => {
-    const generated: Star[] = Array.from({ length: 80 }).map((_, i) => ({
+  // 使用确定性随机在 render 期生成，保证 SSR/CSR 一致且避免挂载后额外重渲染
+  const stars = useMemo<Star[]>(() => {
+    const rand = mulberry32(0x57415253);
+    return Array.from({ length: 80 }).map((_, i) => ({
       id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      size: 1 + Math.random() * 2.5,
-      twinkleDuration: 1.5 + Math.random() * 3,
-      twinkleDelay: Math.random() * -5,
+      top: `${rand() * 100}%`,
+      left: `${rand() * 100}%`,
+      size: 1 + rand() * 2.5,
+      twinkleDuration: 1.5 + rand() * 3,
+      twinkleDelay: rand() * -5,
     }));
-    setStars(generated);
   }, []);
 
   return (

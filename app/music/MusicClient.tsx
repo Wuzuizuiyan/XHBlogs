@@ -27,6 +27,8 @@ export default function MusicClient() {
 
   useEffect(() => {
     if (!currentSong) {
+      // 当前歌曲变化时同步清空歌词，依赖运行时播放状态
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setParsedLyrics([]);
       return;
     }

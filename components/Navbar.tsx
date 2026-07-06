@@ -42,6 +42,8 @@ export default function Navbar() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const vh = window.innerHeight;
+      // 依赖 window.innerHeight，只能在客户端 effect 中计算拖拽边界
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConstraints({
         top: -(vh / 2) + 80,
         bottom: (vh / 2) - 80

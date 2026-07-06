@@ -9,7 +9,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // 标记组件已挂载，避免 hydration 报错
+    // 标记组件已挂载，避免 hydration 报错（依赖浏览器 localStorage，必须在 effect 中设置）
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
 
     // 从 localStorage 读取真实状态

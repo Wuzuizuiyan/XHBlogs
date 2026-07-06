@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { siteConfig } from '../siteConfig';
+import { mulberry32 } from '../lib/prng';
 
 interface DanmakuItem {
   id: number;
@@ -12,27 +13,27 @@ interface DanmakuItem {
 }
 
 export default function DanmakuBackground() {
-  const [danmakus, setDanmakus] = useState<DanmakuItem[]>([]);
-
-  useEffect(() => {
+  // 使用确定性随机在 render 期生成，保证 SSR/CSR 一致且避免挂载后额外重渲染
+  const danmakus = useMemo<DanmakuItem[]>(() => {
     const list = siteConfig.danmakuList || [];
-    if (list.length === 0) return;
+    if (list.length === 0) return [];
 
     const generatedDanmakus: DanmakuItem[] = [];
     const count = 15;
+    const rand = mulberry32(0x44414e4d);
 
     for (let i = 0; i < count; i++) {
       generatedDanmakus.push({
         id: i,
-        text: list[Math.floor(Math.random() * list.length)],
+        text: list[Math.floor(rand() * list.length)],
         // 现在容器本身只有 30vh 高，这里的 0-100% 就是在这个 30vh 内部随机
         // 我们留一点边距 10-90，防止字被切掉一半
-        top: Math.random() * 80 + 10,
-        duration: Math.random() * 20 + 25,
-        delay: Math.random() * 20,
+        top: rand() * 80 + 10,
+        duration: rand() * 20 + 25,
+        delay: rand() * 20,
       });
     }
-    setDanmakus(generatedDanmakus);
+    return generatedDanmakus;
   }, []);
 
   return (

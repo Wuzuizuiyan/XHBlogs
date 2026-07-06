@@ -10,10 +10,10 @@ function parseLrc(lrcText: string) {
   const lines = lrcText.split(/\r?\n/);
   const result = [];
 
-  for (let line of lines) {
+  for (const line of lines) {
     const matches = [...line.matchAll(/\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?\]/g)];
     if (matches.length > 0) {
-      let text = line.replace(/\[\d{2,}:\d{2}(?:\.\d{2,3})?\]/g, '').trim();
+      const text = line.replace(/\[\d{2,}:\d{2}(?:\.\d{2,3})?\]/g, '').trim();
 
       // 剔除控制字符
       const cleanText = text.replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200D\uFEFF]/g, "");
@@ -115,6 +115,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     };
 
     if (siteConfig.cloudMusicIds?.length > 0) fetchMusicData();
+    // 无歌单时结束加载态，依赖运行时配置
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     else setIsLoading(false);
 
     return () => { isMounted = false; };
@@ -124,6 +126,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     if (playlist.length === 0) return;
     let isMounted = true;
     const currentSong = playlist[currentIndex];
+    // 切歌时重置歌词状态，依赖 currentIndex 变化
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLyrics([]);
     setCurrentLyric("♪ 正在缓冲 ♪");
 
