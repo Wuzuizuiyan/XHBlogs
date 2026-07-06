@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { Song } from '../lib/types';
 
 // 安全解析 LRC 歌词
 function parseLrc(lrcText: string) {
@@ -33,7 +34,7 @@ const formatTime = (time: number) => {
 };
 
 export default function CloudPlayer({ songIds }: { songIds: string[] }) {
-  const [playlist, setPlaylist] = useState<any[]>([]);
+  const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);

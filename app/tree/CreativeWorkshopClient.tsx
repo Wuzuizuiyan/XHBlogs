@@ -7,8 +7,15 @@ import { Trees } from 'lucide-react';
 import { siteConfig } from '../../siteConfig'; // 🌟 引入站点配置
 
 import AlchemyLab from './AlchemyLab';
+import { CreativeItem } from '../../lib/types';
 
-export default function CreativeWorkshopClient({ posts = [], chatters = [], moments = [] }: any) {
+interface CreativeWorkshopClientProps {
+  posts?: CreativeItem[];
+  chatters?: CreativeItem[];
+  moments?: CreativeItem[];
+}
+
+export default function CreativeWorkshopClient({ posts = [], chatters = [], moments = [] }: CreativeWorkshopClientProps) {
 
   // =========================================================
   // 🌟 [现实主义] 饱和渐近经验升级系统 (无限等级，难度封顶)

@@ -48,9 +48,10 @@ export async function POST(req: Request) {
       headers: { 'Content-Type': 'application/json' }
     });
 
-  } catch (error: any) {
-    console.error("Chat route error:", error.message);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Chat route error:", message);
+    return new Response(JSON.stringify({ error: message }), { status: 500 });
   }
 }
 

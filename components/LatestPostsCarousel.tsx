@@ -4,8 +4,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PostMeta } from '../lib/types';
 
-export default function LatestPostsCarousel({ posts }: { posts: any[] }) {
+export default function LatestPostsCarousel({ posts }: { posts: PostMeta[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // 设置自动播放定时器

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react';
 import { siteConfig } from '../siteConfig';
+import { Song } from '../lib/types';
 
 // 【增强版 LRC 歌词解析】
 function parseLrc(lrcText: string) {
@@ -37,9 +38,9 @@ function parseLrc(lrcText: string) {
 type PlayMode = 'loop' | 'single' | 'random';
 
 interface MusicContextType {
-  playlist: any[];
+  playlist: Song[];
   currentIndex: number;
-  currentSong: any; // 扩展了 lyrics 属性
+  currentSong: Song | null; // 扩展了 lyrics 属性
   isPlaying: boolean;
   progress: number;
   currentTime: number;
@@ -63,7 +64,7 @@ interface MusicContextType {
 const MusicContext = createContext<MusicContextType | null>(null);
 
 export function MusicProvider({ children }: { children: ReactNode }) {
-  const [playlist, setPlaylist] = useState<any[]>([]);
+  const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);

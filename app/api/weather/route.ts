@@ -43,8 +43,9 @@ export async function GET() {
 
       console.warn(`⚠️ ${host} 认证未通过:`, data);
 
-    } catch (err: any) {
-      console.error(`🔥 请求 ${host} 出错:`, err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`🔥 请求 ${host} 出错:`, message);
       continue;
     }
   }

@@ -5,8 +5,9 @@ import TimelineNode from './TimelineNode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Sparkles, LayoutGrid, ListTree, Calendar, Hash, ArrowUp } from 'lucide-react';
 import Link from 'next/link';
+import { TimelinePost, TagCount } from '../lib/types';
 
-export default function TimelineClient({ posts: initialPosts, tags }: { posts: any[], tags: { name: string, count: number }[] }) {
+export default function TimelineClient({ posts: initialPosts, tags }: { posts: TimelinePost[], tags: TagCount[] }) {
   const [posts, setPosts] = useState(initialPosts);
   const [selectedTag, setSelectedTag] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState("");

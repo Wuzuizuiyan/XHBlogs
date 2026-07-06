@@ -7,6 +7,7 @@ import { siteConfig } from '../../siteConfig';
 import TimelineClient from '../../components/TimelineClient';
 // 🌟 1. 引入 ToastProvider 喵！
 import { ToastProvider } from '../../components/ToastProvider';
+import { TimelinePost } from '../../lib/types';
 
 export const metadata = {
   title: "归档与探索 | " + siteConfig.title,
@@ -14,7 +15,7 @@ export const metadata = {
 
 export default function Timeline() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  const posts: any[] = [];
+  const posts: TimelinePost[] = [];
   const tagCounts: Record<string, number> = {};
 
   try {
