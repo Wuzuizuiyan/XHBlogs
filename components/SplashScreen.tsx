@@ -19,10 +19,13 @@ export default function SplashScreen() {
   }, []);
 
   useEffect(() => {
+    // SplashScreen 需要在挂载后读取 sessionStorage，避免服务端渲染访问浏览器 API。
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
 
     if (!hasSeenSplash) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShow(true);
       const timer = setTimeout(() => {
         exitSplash();
