@@ -14,6 +14,8 @@ export default function PhotoWallClient() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
+    // 搜索词变化时触发过渡动画（debounce），依赖用户输入
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsTransitioning(true);
 
     const timer = setTimeout(() => {

@@ -82,7 +82,8 @@ async function getPostData(slug: string[]) {
   const relPath = slugToPath(decodedSlug);
   const fullPath = path.join(process.cwd(), 'posts', relPath);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
-  let { data, content } = matter(fileContents);
+  const { data, content: rawContent } = matter(fileContents);
+  let content = rawContent;
 
   // ==========================================
   // 🌟 前台渲染清洗区：终极防吞换行补丁！
@@ -118,7 +119,7 @@ async function getPostData(slug: string[]) {
     // 🌟 allowDangerousHtml 必须开启，这样上面生成的 <br/> 才能顺利通过变成真正的换行！
     .use(remarkRehype, { allowDangerousHtml: true })
     // 🌟 核心升级：开启代码语言自动侦测，并限制白名单，大幅提高 C++ 和常用语言的猜中率！
-    // @ts-ignore
+    // @ts-expect-error rehypeHighlight 的选项类型与 unified 管道声明不完全匹配
     .use(rehypeHighlight, {
       detect: true,
       ignoreMissing: true,

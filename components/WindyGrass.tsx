@@ -1,23 +1,24 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useTheme } from './ThemeProvider';
+import { mulberry32 } from '../lib/prng';
 
 interface WildBlade { id: number; height: number; width: number; delay: number; duration: number; opacity: number; left: string; isLeftCurve: boolean; }
 
 export default function WindyGrass() {
-  const [blades, setBlades] = useState<WildBlade[]>([]);
   // 订阅日夜状态
   const { isDark } = useTheme();
 
-  useEffect(() => {
-    const generated: WildBlade[] = Array.from({ length: 150 }).map((_, i) => ({
-      id: i, height: 30 + Math.random() * 50, width: 1 + Math.random() * 2,
-      delay: Math.random() * -10, duration: 3 + Math.random() * 4,
-      opacity: 0.2 + Math.random() * 0.4,
-      left: `${(i / 150) * 100 + (Math.random() - 0.5) * 0.5}%`,
-      isLeftCurve: Math.random() > 0.5
+  // 使用确定性随机在 render 期生成，保证 SSR/CSR 一致且避免挂载后额外重渲染
+  const blades = useMemo<WildBlade[]>(() => {
+    const rand = mulberry32(0x57494e44);
+    return Array.from({ length: 150 }).map((_, i) => ({
+      id: i, height: 30 + rand() * 50, width: 1 + rand() * 2,
+      delay: rand() * -10, duration: 3 + rand() * 4,
+      opacity: 0.2 + rand() * 0.4,
+      left: `${(i / 150) * 100 + (rand() - 0.5) * 0.5}%`,
+      isLeftCurve: rand() > 0.5
     }));
-    setBlades(generated);
   }, []);
 
   return (
