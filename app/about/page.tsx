@@ -95,7 +95,6 @@ export default async function AboutPage() {
       .use(remarkMath)
       .use(remarkRehype, { allowDangerousHtml: true })
       // 🌟 核心修复：开启自动语言侦测，并限制语言白名单！
-      // @ts-expect-error rehypeHighlight 的选项类型与 unified 管道声明不完全匹配
       .use(rehypeHighlight, {
         detect: true,
         ignoreMissing: true,
