@@ -17,21 +17,32 @@ export default function ProfileCard({ postCount, chatterCount, photoCount }: { p
   return (
     <div
       onClick={() => router.push('/about')}
-      className="rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between transition-all duration-700 hover:scale-[1.01] cursor-pointer group relative overflow-hidden h-full min-h-[220px] md:min-h-[280px]"
+      className="rounded-[2rem] bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-5 sm:p-6 md:p-8 transition-all duration-700 hover:scale-[1.01] cursor-pointer group relative overflow-hidden h-full min-h-[260px]"
     >
       {/* 暖雾底色 */}
       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-slate-100/10 dark:from-amber-900/5 dark:to-transparent pointer-events-none" />
+      <div className="absolute left-0 top-0 h-full w-2 bg-gradient-to-b from-amber-400/70 via-stone-300/50 to-slate-400/50 pointer-events-none" />
+      <div className="absolute right-5 top-5 hidden sm:block text-right pointer-events-none">
+        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">Save Slot</p>
+        <p className="font-mono text-3xl font-black text-amber-500/30 dark:text-amber-300/20">01</p>
+      </div>
 
-      <div className="flex items-start justify-between relative z-10">
-        <div className="flex items-center gap-4 md:gap-6 w-full">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl md:rounded-2xl bg-gradient-to-tr from-amber-400/80 to-slate-400/80 p-1 shadow-lg flex-shrink-0 transition-transform duration-500 group-hover:rotate-3">
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_minmax(0,1fr)] gap-5 md:gap-7">
+        <div className="flex md:flex-col items-center md:items-start gap-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl bg-gradient-to-tr from-amber-400/80 to-slate-400/80 p-1 shadow-lg flex-shrink-0 transition-transform duration-500 group-hover:rotate-3">
             <img src={siteConfig.avatarUrl} alt="avatar" className="w-full h-full rounded-lg md:rounded-xl object-cover bg-white" />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="hidden md:block rounded-2xl border border-dashed border-slate-300/60 dark:border-slate-600/60 px-3 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+            Archive Owner
+          </div>
+        </div>
+
+        <div className="min-w-0 flex flex-col justify-between gap-6">
+          <div>
             <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-1">
               个人存档点
             </p>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-1 md:mb-2 pb-1 leading-snug tracking-wider transition-colors duration-700 truncate">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 pb-1 leading-tight tracking-wider transition-colors duration-700 truncate">
               {siteConfig.authorName}
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-slate-700 dark:text-slate-300 font-medium leading-relaxed max-w-md transition-colors duration-700 line-clamp-2 md:line-clamp-none">
@@ -50,25 +61,21 @@ export default function ProfileCard({ postCount, chatterCount, photoCount }: { p
               </div>
             )}
           </div>
-        </div>
-      </div>
 
-      <div className="flex flex-col md:flex-row items-center md:items-end justify-between mt-6 md:mt-8 gap-5 md:gap-6 relative z-10">
-        <div className="flex gap-2 sm:gap-6 w-full md:w-auto justify-between sm:justify-around md:justify-start px-2 sm:px-0">
-          <StatItem count={postCount} label="拾零" color="text-amber-700 dark:text-amber-400" />
-          <div className="w-px h-8 md:h-10 bg-slate-300/50 dark:bg-slate-700 hidden md:block"></div>
-          <StatItem count={chatterCount} label="碎语" color="text-slate-600 dark:text-slate-400" />
-          <div className="w-px h-8 md:h-10 bg-slate-300/50 dark:bg-slate-700 hidden md:block"></div>
-          <StatItem count={photoCount} label="途经" color="text-stone-600 dark:text-stone-400" />
-        </div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <StatItem count={postCount} label="拾零" color="text-amber-700 dark:text-amber-400" />
+            <StatItem count={chatterCount} label="碎语" color="text-slate-600 dark:text-slate-400" />
+            <StatItem count={photoCount} label="途经" color="text-stone-600 dark:text-stone-400" />
+          </div>
 
-        <div className="flex gap-2 md:gap-3 flex-wrap justify-center md:justify-end w-full md:w-auto" onClick={(e) => e.stopPropagation()}>
-          <SocialBtn type="github" url={siteConfig.social?.github} />
-          <SocialBtn type="gitee" url={siteConfig.social?.gitee} />
-          <SocialBtn type="google" url={siteConfig.social?.google} />
-          <SocialBtn type="email" onClick={() => copyToClipboard(siteConfig.social?.email || '', '邮箱')} />
-          <SocialBtn type="qq" onClick={() => copyToClipboard(siteConfig.social?.qq || '', 'QQ号')} />
-          <SocialBtn type="wechat" onClick={() => copyToClipboard(siteConfig.social?.wechat || '', '微信号')} />
+          <div className="flex gap-2 md:gap-3 flex-wrap justify-start w-full" onClick={(e) => e.stopPropagation()}>
+            <SocialBtn type="github" url={siteConfig.social?.github} />
+            <SocialBtn type="gitee" url={siteConfig.social?.gitee} />
+            <SocialBtn type="google" url={siteConfig.social?.google} />
+            <SocialBtn type="email" onClick={() => copyToClipboard(siteConfig.social?.email || '', '邮箱')} />
+            <SocialBtn type="qq" onClick={() => copyToClipboard(siteConfig.social?.qq || '', 'QQ号')} />
+            <SocialBtn type="wechat" onClick={() => copyToClipboard(siteConfig.social?.wechat || '', '微信号')} />
+          </div>
         </div>
       </div>
     </div>
@@ -77,7 +84,7 @@ export default function ProfileCard({ postCount, chatterCount, photoCount }: { p
 
 function StatItem({ count, label, color }: { count: number, label: string, color: string }) {
   return (
-    <div className="text-center group/stat px-2">
+    <div className="rounded-2xl bg-white/35 dark:bg-slate-700/30 border border-white/40 dark:border-white/10 px-3 py-2 text-left group/stat">
       <div className={`text-xl md:text-2xl font-black ${color} transition-transform group-hover/stat:scale-110`}>{count}</div>
       <div className="text-[9px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">{label}</div>
     </div>

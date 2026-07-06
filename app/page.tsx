@@ -161,46 +161,68 @@ export default function Home() {
         <PageTransition>
           {/* 🌟 调整整体容器的内边距，适应手机端更小的屏幕 */}
           <div className="w-full max-w-6xl mx-auto mt-24 sm:mt-28 px-4 sm:px-6 lg:px-10 relative z-10">
-            <SearchBar posts={allPosts} />
-
-            <main className="flex flex-col gap-6 w-full mt-6">
-
-              {/* 第一行：作者档案卡 + 今日存档状态 */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-                <div className="col-span-1 lg:col-span-7 flex flex-col">
-                  <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
+            <section className="relative overflow-hidden rounded-[2rem] border border-white/40 dark:border-white/10 bg-white/35 dark:bg-slate-900/45 backdrop-blur-xl shadow-2xl px-5 py-6 sm:px-8 sm:py-8">
+              <div className="absolute -top-24 right-10 h-56 w-56 rounded-full bg-amber-200/25 dark:bg-amber-500/10 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 left-8 h-48 w-48 rounded-full bg-slate-300/20 dark:bg-indigo-500/10 blur-3xl pointer-events-none" />
+              <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6 lg:items-end">
+                <div>
+                  <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.35em] text-amber-700/80 dark:text-amber-300/80 mb-3">
+                    Save Slot 01 / Mist Archive
+                  </p>
+                  <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-950 dark:text-white leading-tight">
+                    雾中存档工作台
+                  </h1>
+                  <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
+                    一个游戏策划的个人存档点：把策划案、碎语、照片和未完成的灵感先收进雾里，等它们慢慢长出形状。
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {siteConfig.archiveRoles?.map((role) => (
+                      <span key={role} className="rounded-full border border-white/50 dark:border-white/10 bg-white/45 dark:bg-slate-800/45 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-sm">
+                        {role}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="col-span-1 lg:col-span-5 flex flex-col">
-                  <ArchiveStatusCard />
+                <div className="lg:justify-self-end w-full">
+                  <SearchBar posts={allPosts} />
                 </div>
               </div>
+            </section>
 
-              {/* 音乐氛围条 */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-                <div className="col-span-1 lg:col-span-12 flex flex-col gap-2">
-                  <CloudPlayer />
-                  <LyricBar />
-                </div>
-              </div>
+            <main className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-6 w-full mt-6 items-start">
 
-              {/* 第二行：最近拾零 + 灵感掉落 */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
-                <div className="col-span-1 lg:col-span-6 flex flex-col">
+              {/* 左侧主舞台：作者档案、最新拾零和入口区 */}
+              <section className="flex flex-col gap-6 min-w-0">
+                <ProfileCard postCount={allPosts.length} chatterCount={chatterCount} photoCount={realPhotoCount}/>
+
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.85fr)] gap-6">
                   <LatestPostsCarousel posts={top5Posts} />
+                  <div className="flex flex-col gap-6">
+                    <InspirationDropCard />
+                    <div className="rounded-3xl bg-white/35 dark:bg-slate-800/45 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl overflow-hidden p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-3">Background Track</p>
+                      <LyricBar />
+                    </div>
+                  </div>
                 </div>
-                <div className="col-span-1 lg:col-span-6 flex flex-col">
-                  <InspirationDropCard />
-                </div>
-              </div>
 
-              {/* 第三行：雾中碎语 + 途经之景 + 未完成工程 */}
-              <ArchiveEntranceCard
-                photoCover={latestAlbum.cover}
-                chatterDescription={siteConfig.chatterDescription}
-              />
+                <ArchiveEntranceCard
+                  photoCover={latestAlbum.cover}
+                  chatterDescription={siteConfig.chatterDescription}
+                />
+              </section>
+
+              {/* 右侧侧栏：今日状态和音乐氛围，不再占据首页主轴 */}
+              <aside className="flex flex-col gap-6 xl:sticky xl:top-24">
+                <ArchiveStatusCard />
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-amber-300/10 to-slate-400/10 blur-xl pointer-events-none" />
+                  <CloudPlayer />
+                </div>
+              </aside>
 
               {/* 底部：存档点状态栏 */}
-              <div className="w-full mt-2">
+              <div className="xl:col-span-2 w-full mt-2">
                 <SiteDashboard />
               </div>
             </main>
