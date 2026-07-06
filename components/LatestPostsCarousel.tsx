@@ -5,7 +5,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function LatestPostsCarousel({ posts }: { posts: any[] }) {
+type CarouselPost = {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  formattedDate?: string;
+};
+
+export default function LatestPostsCarousel({ posts }: { posts: CarouselPost[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

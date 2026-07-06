@@ -18,6 +18,25 @@ import ArchiveStatusCard from '../components/ArchiveStatusCard';
 import InspirationDropCard from '../components/InspirationDropCard';
 import ArchiveEntranceCard from '../components/ArchiveEntranceCard';
 
+export type HomePost = {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  content?: string;
+  date: string;
+  formattedDate: string;
+};
+
+type ChatterPreview = {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  date: string;
+  formattedDate: string;
+};
+
 // ── 递归扫描目录，返回所有 .md 文件的相对路径（不含 .md）──
 function walkMdFiles(dir: string, baseDir: string): string[] {
   const results: string[] = [];
@@ -51,7 +70,7 @@ function formatUpdateTime(dateString: string) {
 
 export default function Home() {
   const postsDirectory = path.join(process.cwd(), 'posts');
-  let allPosts: any[] = [];
+  let allPosts: HomePost[] = [];
   try {
     if (fs.existsSync(postsDirectory)) {
       const relPaths = walkMdFiles(postsDirectory, postsDirectory);
@@ -78,11 +97,11 @@ export default function Home() {
         return b.slug.localeCompare(a.slug);
       });
     }
-  } catch (e) {}
+  } catch {}
   const top5Posts = allPosts.length > 0 ? allPosts.slice(0, 5) : [{ slug: 'none', title: '暂无文章', description: '快去写第一篇吧！', cover: siteConfig.defaultPostCover, date: '', formattedDate: '' }];
 
   const chattersDirectory = path.join(process.cwd(), 'chatters');
-  let allChatters: any[] = [];
+  let allChatters: ChatterPreview[] = [];
   try {
     if (fs.existsSync(chattersDirectory)) {
       // 递归扫描子目录
@@ -129,7 +148,7 @@ export default function Home() {
         return b.slug.localeCompare(a.slug);
       });
     }
-  } catch (e) {}
+  } catch {}
 
   const chatterCount = allChatters.length;
   const realPhotoCount = albums.reduce((total, album) => total + album.photos.length, 0);
